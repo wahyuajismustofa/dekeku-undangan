@@ -1,4 +1,5 @@
-//params
+const _sheetName = "dekeku_preview-undangan-pernikahan";
+const _fileName = 'preview-undangan-pernikahan';
 function getParam(variabel) {
   const params = new URLSearchParams(window.location.search);
   const nilai = params.get(variabel);
@@ -8,69 +9,12 @@ function getParam(variabel) {
 // variabel global
 const namaTamu = getParam("to");
 const SCRIPT_BASE_URL = "https://script.google.com/macros/s/AKfycbwZ_spsPzVJ_VC4y_mgYjUvFHYAagYjMseFTODgZUG1QXQZtKdlAxiuaVVXQ4HjaMN8rw/exec";
-const DATABASE_NAME = "dekeku_preview-undangan-pernikahan"; 
+const DATABASE_NAME = _sheetName; 
 let data_update;
 let data;
 
 async function init() {
-  // Pengecekan elemen penting
-  let missing = false;
-  if (!document.querySelector('.data-nama')) {
-    console.error('Element dengan class .data-nama tidak ditemukan di HTML. Fitur greeting tidak akan berjalan.');
-    missing = true;
-  }
-  if (!document.getElementById('rsvpContainer')) {
-    console.error('Element dengan id #rsvpContainer tidak ditemukan di HTML. Fitur RSVP tidak akan berjalan.');
-    missing = true;
-  }
-  if (!document.getElementById('weddingGiftForm')) {
-    console.error('Element dengan id #weddingGiftForm tidak ditemukan di HTML. Fitur kado tidak akan berjalan.');
-    missing = true;
-  } else {
-    const form = document.getElementById('weddingGiftForm');
-    if (!form.querySelector('[name="account_name"]')) {
-      console.error('Input dengan name="account_name" tidak ditemukan di #weddingGiftForm.');
-      missing = true;
-    }
-    if (!form.querySelector('[name="message"]')) {
-      console.error('Input dengan name="message" tidak ditemukan di #weddingGiftForm.');
-      missing = true;
-    }
-    if (!form.querySelector('[name="amount"]')) {
-      console.error('Input dengan name="amount" tidak ditemukan di #weddingGiftForm.');
-      missing = true;
-    }
-  }
-  if (!document.getElementById('weddingWishForm')) {
-    console.error('Element dengan id #weddingWishForm tidak ditemukan di HTML. Fitur komentar tidak akan berjalan.');
-    missing = true;
-  } else {
-    const form = document.getElementById('weddingWishForm');
-    if (!form.querySelector('textarea[name="comment"]')) {
-      console.error('Textarea dengan name="comment" tidak ditemukan di #weddingWishForm.');
-      missing = true;
-    }
-  }
-  if (!document.getElementById('comment-container')) {
-    console.error('Element dengan id #comment-container tidak ditemukan di HTML. Fitur komentar tidak akan berjalan.');
-    missing = true;
-  }
-  const alertBox = document.getElementById('alert');
-  if (!alertBox) {
-    console.error('Element dengan id #alert tidak ditemukan di HTML. Fitur alert tidak akan berjalan.');
-    missing = true;
-  } else {
-    if (!alertBox.querySelector('.alert-text')) {
-      console.error('Element dengan class .alert-text tidak ditemukan di #alert.');
-      missing = true;
-    }
-    if (!alertBox.querySelector('.alert-close')) {
-      console.error('Element dengan class .alert-close tidak ditemukan di #alert.');
-      missing = true;
-    }
-  }
-
-  data = await getData('preview-undangan-pernikahan');
+  data = await getData(_fileName);
   data_update = data.updated;
   if (data && Array.isArray(data.tamu)) {
     gantiIsiClass("nama", namaTamu);
@@ -104,7 +48,7 @@ async function updateData() {
 
     // Pengulangan ambil data terus-menerus
     const polling = async () => {
-      const dataBaru = await getData('preview-undangan-pernikahan');
+      const dataBaru = await getData(_fileName);
 
       if (dataBaru.updated && dataBaru.updated != data_update) {
         showAlert("Perubahan data terdeteksi. Memuat ulang halaman...", "info");
@@ -324,7 +268,6 @@ function buildUrlRsvp(kehadiran, acara) {
 function initGiftFormHandler() {
   const form = document.getElementById("weddingGiftForm");
     if (!form) {
-    console.error("Form #weddingGiftForm tidak ditemukan");
     return;
   }
 
@@ -496,13 +439,13 @@ async function buatKomentarDariData() {
 function formatTanggal(isoString) {
   if (!isoString) return "-";
   const tanggal = new Date(isoString);
-  return tanggal.toLocaleString("en-GB", {
+  return tanggal.toLocaleDateString("id-ID", {
     day: "2-digit",
-    month: "short",
+    month: "long",
     year: "numeric",
     hour: "2-digit",
-    minute: "2-digit"
-  }).replace(",", "");
+    minute: "2-digit",
+  });
 }
 
 // Escape HTML untuk keamanan
