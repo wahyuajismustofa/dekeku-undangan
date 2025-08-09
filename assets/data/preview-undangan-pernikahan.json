@@ -1,5 +1,5 @@
 {
-  "updated": "8/8/2025, 01.14.36",
+  "updated": "9/8/2025, 19.06.15",
   "tamu": [
     {
       "nama": "Wahyu",
@@ -7,6 +7,13 @@
       "pesan": "Testing",
       "kehadiran": "",
       "acara": ""
+    },
+    {
+      "nama": "Arto Printing",
+      "waktu": "",
+      "pesan": "",
+      "kehadiran": "Hadir",
+      "acara": "Akad Nikah"
     }
   ]
 }
