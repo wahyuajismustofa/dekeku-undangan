@@ -1,7 +1,11 @@
 {
     "repository": {
         "username": "wahyuajismustofa",
-        "repo": "undangan-dekeku"
+        "repo": "undangan-dekeku",
+        "url":"https://undangan.dekeku.my.id",
+        "mainUrl":"https://www.dekeku.my.id",
+		"googleAnalitik":"G-1M54ZWZRVT",
+        "waAdmin":"6285161517176"
     },
     "site": {
         "name": "Undangan Dekeku",

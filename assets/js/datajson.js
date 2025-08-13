@@ -1,5 +1,7 @@
 const _sheetName = "dekeku_preview-undangan-pernikahan";
 const _fileName = 'preview-undangan-pernikahan';
+const _urlApi = "http://127.0.0.1:8787";
+
 function getParam(variabel) {
   const params = new URLSearchParams(window.location.search);
   const nilai = params.get(variabel);
@@ -45,8 +47,7 @@ async function updateData() {
       console.log("[updateData] Lewatkan update karena sedang berjalan di localhost.");
       return;
     }
-
-    // Pengulangan ambil data terus-menerus
+    
     const polling = async () => {
       const dataBaru = await getData(_fileName);
 
@@ -58,7 +59,7 @@ async function updateData() {
       }
     };
 
-    polling(); // Mulai polling
+    polling();
   } catch (err) {
     console.error("Gagal memeriksa pembaruan data:", err.message);
   }
@@ -214,10 +215,15 @@ async function handleFormRSVP(event) {
   const acara = getSelectedEvents();
 
   try {
-    const url = buildUrlRsvp(kehadiran, acara);
-    const response = await fetch(url);
-    const result = await response.json();
-  
+    const detailFile = `${_fileName}.tamu`;
+    const data = {nama: namaTamu, kehadiran:kehadiran, acara: acara};
+    const query = {nama: namaTamu};
+    const res = await fetch(`${_urlApi}/gh/data?action=update_or_add`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ detailFile:detailFile, newData: data, query: query })
+      });
+      result = await res.json();
   if (result.status){
     showAlert("RSVP berhasil dikirim!", "success");
     updateData(); 
