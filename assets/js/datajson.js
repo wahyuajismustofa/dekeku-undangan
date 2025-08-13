@@ -1,6 +1,6 @@
-const _sheetName = "dekeku_preview-undangan-pernikahan";
-const _fileName = 'tamu';
-const _urlApi = "http://127.0.0.1:8787";
+const _fileName = 'preview-undangan-pernikahan';
+const _urlApi = "https://api.dekeku.my.id";
+const waNumber = "6285161517176";
 
 function getParam(variabel) {
   const params = new URLSearchParams(window.location.search);
@@ -10,12 +10,12 @@ function getParam(variabel) {
 
 // variabel global
 const namaTamu = getParam("to");
-const SCRIPT_BASE_URL = "https://script.google.com/macros/s/AKfycbwZ_spsPzVJ_VC4y_mgYjUvFHYAagYjMseFTODgZUG1QXQZtKdlAxiuaVVXQ4HjaMN8rw/exec";
-const DATABASE_NAME = _sheetName; 
 let data_update;
+let config = {};
 let data;
 
 async function init() {
+  config = await getConfig();
   data = await getData(_fileName);
   data_update = data.updated;
   if (data && Array.isArray(data.tamu)) {
@@ -30,43 +30,26 @@ async function init() {
 
 async function getData(namaFile) {
   try {
-    const timestamp = new Date().getTime();
-    const response = await fetch(`/assets/data/${namaFile}.json?t=${timestamp}`);
-    if (!response.ok) throw new Error("Gagal mengambil data");
-    return await response.json();
+    const res = await fetch(`${config.url}/assets/data/${namaFile}.json?time=${new Date()}`);
+    const response = await res.json();
+    return response;
   } catch (err) {
     console.error("Error:", err.message);
     return {};
   }
 }
 
-async function updateData() {
+async function getConfig() {
   try {
-    const isLocalhost = location.hostname === "localhost";
-    if (isLocalhost) {
-      console.log("[updateData] Lewatkan update karena sedang berjalan di localhost.");
-      return;
-    }
-    
-    const polling = async () => {
-      const dataBaru = await getData(_fileName);
-
-      if (dataBaru.updated && dataBaru.updated != data_update) {
-        showAlert("Perubahan data terdeteksi. Memuat ulang halaman...", "info");
-        window.location.reload();
-      } else {
-        setTimeout(polling, 5000);
-      }
-    };
-
-    polling();
+    const response = await fetch(`/config.json`);
+    if (!response.ok) throw new Error("Gagal mengambil data");
+    let res = await response.json();
+    return res.repository;
   } catch (err) {
-    console.error("Gagal memeriksa pembaruan data:", err.message);
+    console.error("Error:", err.message);
+    return {};
   }
 }
-
-
-
 
 function gantiIsiClass(className, nilaiBaru) {
   const elemenList = document.querySelectorAll('.data-' + className);
@@ -103,7 +86,7 @@ function buatFormRSVP() {
               <div class="rsvp-confirm-btn going">Hadir</div>
             </label>
             <label data-aos="fade-up" data-aos-duration="1200">
-              <input type="radio" name="rsvp_status" value="Tidak_Hadir">
+              <input type="radio" name="rsvp_status" value="Tidak Hadir">
               <div class="rsvp-confirm-btn not-going">Tidak Hadir</div>
             </label>
           </div>
@@ -209,9 +192,11 @@ function initRSVPFormHandler() {
 
 async function handleFormRSVP(event) {
   event.preventDefault();
-  const kehadiran = getAttendanceStatus();
+  const form = document.getElementById("RSVPForm");
+  const selectedKehadiran = document.querySelector('input[name="rsvp_status"]:checked');
+  const kehadiran = selectedKehadiran ? selectedKehadiran.value : null;
   if (!kehadiran){ return showAlert("Silakan pilih status kehadiran.", "error")};
-
+  if (!namaTamu){ return showAlert("Mohon buka undangan melalui link yang valid.", "error")};
   const acara = getSelectedEvents();
 
   try {
@@ -220,6 +205,8 @@ async function handleFormRSVP(event) {
       query: {nama: namaTamu},
       newData: {nama: namaTamu, kehadiran:kehadiran, acara: acara}
     };
+    form.reset();
+    showAlert("Mengirim data RSVP", "info");
     const res = await fetch(`${_urlApi}/gh/data?action=update_or_add`,{
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -227,9 +214,10 @@ async function handleFormRSVP(event) {
       });
 
       result = await res.json();
+      data = await result.data;
   if (result.status){
     showAlert("RSVP berhasil dikirim!", "success");
-    updateData(); 
+    tampilkanRSVP();
   }else{
     showAlert(result.error, "error");
   }
@@ -237,11 +225,6 @@ async function handleFormRSVP(event) {
     console.error("Gagal mengirim RSVP:", err);
   showAlert("Gagal mengirim data. Silakan coba lagi.", "error");
   }
-}
-
-function getAttendanceStatus() {
-  const selected = document.querySelector('input[name="rsvp_status"]:checked');
-  return selected ? selected.value : null;
 }
 
 function initAttendanceToggle() {
@@ -252,7 +235,7 @@ function initAttendanceToggle() {
 
   radios.forEach(radio => {
     radio.addEventListener('change', () => {
-      if (radio.value === "Tidak_Hadir" && radio.checked) {
+      if (radio.value === "Tidak Hadir" && radio.checked) {
         acara.style.display = "none";
       } else if (radio.value === "Hadir" && radio.checked) {
         acara.style.display = "";
@@ -265,14 +248,9 @@ function initAttendanceToggle() {
 function getSelectedEvents() {
   const eventCheckboxes = document.querySelectorAll('input[name="selected_event[]"]:checked');
   const values = Array.from(eventCheckboxes).map(cb => cb.value);
-  return values.length > 0 ? encodeCustom(values.join(", ")) : "Tidak_memilih_acara";
+  return values.length > 0 ? encodeCustom(values.join(", ")) : "Tidak memilih acara";
 }
 
-
-function buildUrlRsvp(kehadiran, acara) {
-  const query = `UPDATE tamu SET kehadiran=${encodeURIComponent(kehadiran)},acara=${encodeURIComponent(acara)} WHERE nama=${encodeCustom(namaTamu)}`;
-  return `${SCRIPT_BASE_URL}?conn=DATABASE=${DATABASE_NAME}&data=${query}`;
-}
 // kado ---------------------------------------
 function initGiftFormHandler() {
   const form = document.getElementById("weddingGiftForm");
@@ -286,30 +264,33 @@ function initGiftFormHandler() {
 async function handleFormGift(event) {
   event.preventDefault();
   const form = document.getElementById("weddingGiftForm");
-  const akun = encodeCustom(form.querySelector('[name="account_name"]').value);
-  const pesan = encodeCustom(form.querySelector('[name="message"]').value);
-  const nominal = encodeCustom(form.querySelector('[name="amount"]').value);
-  if (!akun || !pesan || !nominal) return alert("Silakan lengkapi data kado");
+  const akun = encodeCustom(form.querySelector('[name="account_name"]').value.trim());
+  const pesan = encodeCustom(form.querySelector('[name="message"]').value.trim());
+  const nominal = encodeCustom(form.querySelector('[name="amount"]').value.trim());
+
+  if (!akun || !pesan || !nominal) {
+    return alert("Silakan lengkapi data kado");
+  }
+
+  // Buat pesan WhatsApp dengan format detail kado
+  const waMessage = encodeURIComponent(
+    `Konfirmasi Kado Pernikahan:\n` +
+    `Akun: ${akun}\n` +
+    `Nominal: ${nominal}\n` +
+    `Pesan: ${pesan}`
+  );
+
+  // Buat URL WhatsApp API (web)
+  const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
 
   try {
-    const url = buildUrlGift(akun,pesan,nominal);
-    const response = await fetch(url);
-    const result = await response.json();
-  if (result.status){
-    showAlert("Konfirmasi kado berhasil dikirim!", "success");
-    updateData(); 
-  }else{
-    showAlert(result.error, "error");
-  }
+    window.open(waUrl, "_blank");
   } catch (err) {
-    console.error("Gagal mengirim konfirmasi kado:", err);
-    showAlert("Gagal mengirim data. Silakan coba lagi.", "error");
+    console.error("Gagal mengirim detail kado ke WhatsApp:", err);
+    showAlert("Gagal membuka WhatsApp. Silakan coba lagi.", "error");
   }
 }
-function buildUrlGift(akun,pesan,nominal) {
-  const query = `UPDATE kado SET akun=${encodeURIComponent(akun)},pesan=${encodeURIComponent(pesan)},nominal=${encodeURIComponent(nominal)} WHERE nama=${encodeCustom(namaTamu)}`;
-  return `${SCRIPT_BASE_URL}?conn=DATABASE=${DATABASE_NAME}&data=${query}`;
-}
+
 // komentar -----------------------------------
 function initCommentFormHandler() {
   const form = document.getElementById("weddingWishForm");
@@ -323,70 +304,61 @@ function initCommentFormHandler() {
 
 async function handleFormComment(event) {
   event.preventDefault();
-  const komentar = getComment();
+  const form = document.getElementById("weddingWishForm");
+  const pesanWrap = document.querySelector('textarea[name="comment"]');
+  if (!pesanWrap){ return showAlert("Pesan tidak boleh kosong.", "error")};
+  if (!namaTamu){ return showAlert("Mohon buka undangan melalui link yang valid.", "error")};
+  const komentar = pesanWrap.value;
   if (!komentar) return alert("Silakan isi pesan anda.");
 
   try {
-    const url = buildUrlComment(komentar);
-    const response = await fetch(url);
-    const result = await response.json();
+    
+    let waktu = new Date().toISOString();
+    const payload = {
+      detailFile: `${_fileName}.pesan`,
+      newData: {nama: namaTamu, pesan : komentar, waktu : waktu}
+    };
+    form.reset();
+    showAlert("Mengirim data Pesan", "info");
+    const res = await fetch(`${_urlApi}/gh/data?action=post`,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-  if (result.status){
-    showAlert("Pesan berhasil dikirim!", "success");
-    updateData(); 
-  }else{
-    showAlert(result.error, "error");
-  }
+      result = await res.json();
+      data = await result.data;
+      if (result.status){
+        showAlert("Pesan berhasil dikirim!", "success");
+        buatKomentarDariData();
+      }else{
+        showAlert(result.error, "error");
+      }      
   } catch (err) {
     console.error("Gagal mengirim Pesan:", err);
   showAlert("Gagal mengirim data. Silakan coba lagi.", "error");
   }
 }
 
-function getComment() {
-  const komentar = document.querySelector('textarea[name="comment"]');
-  if (!komentar) return null;
-
-  return encodeCustom(komentar.value);
-}
-
-
-function buildUrlComment(komentar) {
-  const now = new Date();
-  const waktu = [
-    String(now.getDate()).padStart(2, '0'),
-    String(now.getMonth() + 1).padStart(2, '0'),
-    now.getFullYear()
-  ].join('/') + '_' +
-  [
-    String(now.getHours()).padStart(2, '0'),
-    String(now.getMinutes()).padStart(2, '0')
-  ].join(':');
-  const query = `UPDATE tamu SET waktu=${encodeURIComponent(waktu)},pesan=${encodeURIComponent(komentar)} WHERE nama=${encodeCustom(namaTamu)}`;
-  return `${SCRIPT_BASE_URL}?conn=DATABASE=${DATABASE_NAME}&data=${query}`;
-}
 
 async function buatKomentarDariData() {
-  if (!data || !Array.isArray(data.tamu)) return;
+  if (!data || !Array.isArray(data.pesan)) return;
 
   const komentarContainer = document.getElementById("comment-container");
   if (!komentarContainer) {
     console.warn("Elemen container komentar tidak ditemukan.");
     return;
   }
-
-  // Filter hanya tamu yang punya pesan dan urutkan dari index terbesar
-  const komentarList = data.tamu
+  
+  const komentarList = data.pesan
     .map((tamu, idx) => ({...tamu, _idx: idx}))
     .filter(tamu => tamu.pesan && tamu.pesan.trim() !== "")
     .reverse();
   let loadedCount = 0;
   const batchSize = 5;
 
-  // Clear container
   komentarContainer.innerHTML = "";
 
-  // Hapus tombol jika ada
   const existingBtn = document.getElementById("moreComment");
   if (existingBtn) existingBtn.remove();
 
@@ -420,7 +392,6 @@ async function buatKomentarDariData() {
     }
     loadedCount = end;
 
-    // Tampilkan tombol jika masih ada sisa
     if (loadedCount < komentarList.length) {
       let btn = document.getElementById("moreComment");
       if (!btn) {
@@ -431,7 +402,6 @@ async function buatKomentarDariData() {
         komentarContainer.parentNode.appendChild(btn);
         btn.addEventListener("click", function() {
           renderBatch();
-          // Scroll ke bawah jika perlu
           btn.scrollIntoView({behavior: "smooth", block: "end"});
         });
       }
@@ -503,5 +473,8 @@ function encodeCustom(text) {
     .replace(/,/g, "--koma--");
 }
 
+window.alert = function(message) {
+  showAlert(message, "error");
+};
 
 init();
