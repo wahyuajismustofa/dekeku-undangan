@@ -1,5 +1,5 @@
 const _sheetName = "dekeku_preview-undangan-pernikahan";
-const _fileName = 'preview-undangan-pernikahan';
+const _fileName = 'tamu';
 const _urlApi = "http://127.0.0.1:8787";
 
 function getParam(variabel) {
@@ -215,14 +215,17 @@ async function handleFormRSVP(event) {
   const acara = getSelectedEvents();
 
   try {
-    const detailFile = `${_fileName}.tamu`;
-    const data = {nama: namaTamu, kehadiran:kehadiran, acara: acara};
-    const query = {nama: namaTamu};
+    const payload = {
+      detailFile: `${_fileName}.tamu`,
+      query: {nama: namaTamu},
+      newData: {nama: namaTamu, kehadiran:kehadiran, acara: acara}
+    };
     const res = await fetch(`${_urlApi}/gh/data?action=update_or_add`,{
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ detailFile:detailFile, newData: data, query: query })
+        body: JSON.stringify(payload)
       });
+
       result = await res.json();
   if (result.status){
     showAlert("RSVP berhasil dikirim!", "success");
