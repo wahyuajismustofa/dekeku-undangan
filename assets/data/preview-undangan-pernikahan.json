@@ -1,5 +1,5 @@
 {
-  "updated": "9/8/2025, 19.06.15",
+  "updated": "13/8/2025, 07.09.03",
   "tamu": [
     {
       "nama": "Wahyu",
@@ -14,6 +14,13 @@
       "pesan": "",
       "kehadiran": "Hadir",
       "acara": "Akad Nikah"
+    },
+    {
+      "nama": "Dekeku",
+      "waktu": "2025-08-13T00:08:00.000Z",
+      "pesan": "Test",
+      "kehadiran": "",
+      "acara": ""
     }
   ]
 }
