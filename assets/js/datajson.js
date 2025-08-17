@@ -2,12 +2,6 @@ const _fileName = 'preview-undangan-pernikahan';
 const _urlApi = "https://api.dekeku.my.id";
 const waNumber = "6285161517176";
 
-function getParam(variabel) {
-  const params = new URLSearchParams(window.location.search);
-  const nilai = params.get(variabel);
-  return nilai ? nilai.replace(/_/g, ' ') : null;
-}
-
 // variabel global
 const namaTamu = getParam("to");
 let data_update;
@@ -19,12 +13,11 @@ async function init() {
   data = await getData(_fileName);
   data_update = data.updated;
   if (data && Array.isArray(data.tamu)) {
-    gantiIsiClass("nama", namaTamu);
-    buatKomentarDariData();
-    document.body.classList.remove("imp-hidden");
-    tampilkanRSVP();
-    initGiftFormHandler();
-    initCommentFormHandler();
+    // buatKomentarDariData();
+    // document.body.classList.remove("imp-hidden");
+    // tampilkanRSVP();
+    // initGiftFormHandler();
+    // initCommentFormHandler();
   }
 }
 
@@ -51,29 +44,16 @@ async function getConfig() {
   }
 }
 
-function gantiIsiClass(className, nilaiBaru) {
-  const elemenList = document.querySelectorAll('.data-' + className);
-
-  if (elemenList.length === 0) {
-    console.warn(`Tidak ditemukan elemen dengan class '${className}'`);
-    return;
-  }
-
-  elemenList.forEach(el => {
-  if (typeof nilaiBaru === 'string' || typeof nilaiBaru === 'number') {
-    el.textContent = String(nilaiBaru);
-  } else {
-    console.warn('Nilai harus berupa string atau angka.');
-  }
-  });
-
+function getParam(variabel) {
+  const params = new URLSearchParams(window.location.search);
+  const nilai = params.get(variabel);
+  return nilai ? nilai.replace(/_/g, ' ') : null;
 }
-
 
 // rsvp ---------------------------------------
 function buatFormRSVP() {
   return `
-    <form  method="POST" id="RSVPForm">
+    <form data-aksi="github-post" data-file="${_fileName}.tamu">
       <!-- Status -->
       <div class="rsvp-status-wrap">
         <div class="rsvp-status-head" data-aos="fade-up" data-aos-duration="1200">
@@ -100,16 +80,16 @@ function buatFormRSVP() {
           </div>
           <div class="session-btn-wrap">
             <label data-aos="fade-up" data-aos-duration="1200">
-              <input type="checkbox" name="selected_event[]" value="Akad_Nikah">
+              <input type="checkbox" name="acara" value="Akad_Nikah">
               <div class="rsvp-session-btn">Akad Nikah</div>
             </label>
             <label data-aos="fade-up" data-aos-duration="1200">
-              <input type="checkbox" name="selected_event[]" value="Resepsi">
+              <input type="checkbox" name="acara" value="Resepsi">
               <div class="rsvp-session-btn">Resepsi</div>
             </label>
           </div>
         </div>
-
+        <input type="hidden" name="nama" value="${namaTamu}">
       <!-- Submit -->
       <div class="rsvp-confirm-wrap" data-aos="fade-up" data-aos-duration="1200">
         <button type="submit" class="rsvp-confirm-btn confirm submit">Konfirmasi</button>
@@ -197,7 +177,9 @@ async function handleFormRSVP(event) {
   const kehadiran = selectedKehadiran ? selectedKehadiran.value : null;
   if (!kehadiran){ return showAlert("Silakan pilih status kehadiran.", "error")};
   if (!namaTamu){ return showAlert("Mohon buka undangan melalui link yang valid.", "error")};
-  const acara = getSelectedEvents();
+  const eventCheckboxes = document.querySelectorAll('input[name="selected_event[]"]:checked');
+  const values = Array.from(eventCheckboxes).map(cb => cb.value);
+  const acara = values.length > 0 ? encodeCustom(values.join(", ")) : "Tidak memilih acara";
 
   try {
     const payload = {
@@ -242,13 +224,6 @@ function initAttendanceToggle() {
       }
     });
   });
-}
-
-
-function getSelectedEvents() {
-  const eventCheckboxes = document.querySelectorAll('input[name="selected_event[]"]:checked');
-  const values = Array.from(eventCheckboxes).map(cb => cb.value);
-  return values.length > 0 ? encodeCustom(values.join(", ")) : "Tidak memilih acara";
 }
 
 // kado ---------------------------------------
@@ -477,4 +452,4 @@ window.alert = function(message) {
   showAlert(message, "error");
 };
 
-init();
+// init();

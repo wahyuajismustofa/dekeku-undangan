@@ -1908,26 +1908,34 @@ section.live-streaming .inner .head p {
 .rsvp-status-body {
   margin-top: 5px;
 }
-.rsvp-status-wrap input[name="rsvp_status"] {
+/* Sembunyikan input asli */
+.rsvp-status-wrap input[type="radio"],
+.rsvp-session-wrap input[type="checkbox"] {
   display: none;
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going {
-  /* background-color: var(--button-background-primary);
-    color: var(--button-text-primary); */
-  background: var(--button-background-secondary);
-  border: 1px solid var(--button-background-primary);
-  color: var(--button-text-secondary);
-  min-width: 50%;
+
+/* Style default tombol */
+.rsvp-confirm-btn,
+.rsvp-session-btn {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: var(--button-background-primary, #f0f0f0);
+  color: var(--button-text-primary, #333);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: center;
 }
-.rsvp-status-wrap
-  input[name="rsvp_status"]:checked
-  + .rsvp-confirm-btn.not-going {
-  /* background-color: var(--button-background-primary);
-    color: var(--button-text-primary); */
-  background: var(--button-background-secondary);
-  border: 1px solid var(--button-background-primary);
-  color: var(--button-text-secondary);
+
+/* Jika input dipilih → style aktif */
+.rsvp-status-wrap input[type="radio"]:checked + .rsvp-confirm-btn,
+.rsvp-session-wrap input[type="checkbox"]:checked + .rsvp-session-btn {
+  background: var(--button-background-secondary, #333);
+  border: 1px solid var(--button-background-primary, #555);
+  color: var(--button-text-secondary, #fff);
 }
+
 
 /* RSVP Amount */
 .rsvp-amount-wrap {
