@@ -3,8 +3,7 @@ import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyu
 const fileName = "testing-undangan";
 let filePesan = {};
 let fileTamu = {};
-let seller = {};
-seller.name = "Dekeku";
+let fileSeller = {};
 
 _dF.waitForCondition(
   () => typeof dekeku !== "undefined" && dekeku.ready === true,
@@ -294,17 +293,73 @@ _dF.showAlert = showAlert;
 async function init(){
   dekeku.prosesJs += 1;
   getParams();
-  if(typeof dekeku.params.namaTamu === "undefined" ){
-    _dF.writeURLParams({namaTamu: seller.name});
-    getParams();
+  if(typeof dekeku.params.sellerId === "undefined" ){
+    dekeku.params.sellerId = 1;
+    _dF.writeURLParams(dekeku.params);
   }
+
   filePesan = {file:`${fileName}.pesan`, nama: "pesan"};
   fileTamu = {file:`${fileName}.tamu`, nama: "tamu", obj:true, filter:{nama: dekeku.params.namaTamu}};
-  _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileTamu,filePesan);
+  fileSeller = {file: "data.seller", nama: "seller", obj:true, filter:{id: dekeku.params.sellerId}};
+  _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileTamu,filePesan,fileSeller);
   await _dF.loadAllData();
+
+  if(typeof dekeku.params.namaTamu === "undefined" ){
+    dekeku.params.namaTamu = dekeku.dataJson.seller.nama;
+    _dF.writeURLParams(dekeku.params);
+  }
+
   gantiIsiClass("nama",dekeku.params.namaTamu);
+  dekeku.dataJson.seller.linkWa = `https://wa.me/${dekeku.dataJson.seller.kontak}`;
+  updateDataAtt("dekeku_data_seller", dekeku.dataJson.seller);
   initRSVP();
   initFormKomentar();
   _dF.initDekeku();
   dekeku.prosesJs -= 1;
+}
+
+function updateDataAtt(attrName, dataObj) {
+    const elements = document.querySelectorAll(`[data-${attrName}]`);
+
+    elements.forEach(el => {
+        let currentData = {};
+        try {
+            currentData = JSON.parse(el.getAttribute(`data-${attrName}`) || "{}");
+        } catch (e) {
+            console.warn(`Gagal parsing data-${attrName}:`, e);
+        }
+
+        // Mapping key -> atribut DOM, dan ambil value dari dataObj
+        const updatedData = {};
+        for (const key in currentData) {
+            const attr = currentData[key]; // contoh: "src" atau "textContent"
+            if (dataObj.hasOwnProperty(key)) {
+                const value = dataObj[key];
+
+                // Update elemen sesuai jenis atribut/properti
+                if (attr in el) {
+                    el[attr] = value;          // properti DOM
+                } else {
+                    el.setAttribute(attr, value); // fallback untuk atribut HTML
+                }
+            }
+        }
+
+        // Simpan kembali ke data-*
+        el.removeAttribute(`data-${attrName}`);
+
+        // Debug log
+        makeLog([el]);
+    });
+}
+
+function makeLog(vars) {
+    if (!Array.isArray(vars)) {
+        console.warn("makeLog: parameter harus berupa array");
+        return;
+    }
+
+    vars.forEach((val, idx) => {
+        console.log(`${idx + 1}: `, val);
+    });
 }
