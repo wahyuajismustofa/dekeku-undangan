@@ -1590,14 +1590,14 @@ section.love-story .story-inner {
 .rsvp-status-body {
     margin-top: 12px;
 }
-.rsvp-status-wrap input[name="rsvp_status"] {
+.rsvp-status-wrap input[name="kehadiran"] {
     display: none;
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going,.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.not-going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going,.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.not-going {
     background-color: var(--button-background-primary);
     color: var(--button-text-primary);
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.not-going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.not-going {
     border: none;
 }
 

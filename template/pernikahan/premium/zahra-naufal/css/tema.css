@@ -1910,27 +1910,27 @@ body.brown .rsvp-head .rsvp-title {
 .rsvp-status-body {
     margin-top: 5px;
 }
-.rsvp-status-wrap input[name="rsvp_status"] {
+.rsvp-status-wrap input[name="kehadiran"] {
     display: none;
 }
 
 /* Brown */
-body.brown .rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going {
+body.brown .rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going {
     background-color: var(--tertiary-clr);
 }
 
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going {
     background-color: var(--background-secondary);
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked:hover + .rsvp-confirm-btn.going,
-.rsvp-status-wrap input[name="rsvp_status"]:hover + .rsvp-confirm-btn.going {
+.rsvp-status-wrap input[name="kehadiran"]:checked:hover + .rsvp-confirm-btn.going,
+.rsvp-status-wrap input[name="kehadiran"]:hover + .rsvp-confirm-btn.going {
     background-color: rgba(var(--background-secondary-rgb), .75);
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.not-going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.not-going {
     background-color: var(--light-clr);
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked:hover + .rsvp-confirm-btn.not-going,
-.rsvp-status-wrap input[name="rsvp_status"]:hover + .rsvp-confirm-btn.not-going {
+.rsvp-status-wrap input[name="kehadiran"]:checked:hover + .rsvp-confirm-btn.not-going,
+.rsvp-status-wrap input[name="kehadiran"]:hover + .rsvp-confirm-btn.not-going {
     background-color: rgba(var(--light-rgb), .75);    
 }
 
@@ -2082,7 +2082,7 @@ body.brown .rsvp-amount-controller .toggle-btn.plus {
     border-radius: 5px;
 }
 
-.session-btn-wrap input[name="selected_event[]"]:checked + .rsvp-session-btn, .session-btn-wrap input[name="selected_event_all"]:checked +  .rsvp-session-btn{
+.session-btn-wrap input[name="acara[]"]:checked + .rsvp-session-btn, .session-btn-wrap input[name="selected_event_all"]:checked +  .rsvp-session-btn{
     background-color: rgba(var(--light-rgb), .75);   
     color: var(--light-clr);
 }

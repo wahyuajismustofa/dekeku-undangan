@@ -1695,7 +1695,7 @@ section.protocol.protocol-03 .inner .body .text-01 {
     padding: 0px;
 }
 
-.rsvp-status-wrap input[name="rsvp_status"] {
+.rsvp-status-wrap input[name="kehadiran"] {
     display: none;
 }
 
@@ -1852,16 +1852,16 @@ section.protocol.protocol-03 .inner .body .text-01 {
 .rsvp-confirm-btn.going:hover {
     background-color: rgba(var(--button-background-primary-rgb), .8);
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going {
     background-color: var(--button-background-secondary);
     color: var(--button-text-secondary);
     border: none;
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going:hover {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going:hover {
     background-color: rgba(var(--button-background-secondary-rgb), .8);
 }
 
-.session-btn-wrap input[name="selected_event[]"]:checked + .rsvp-session-btn, .session-btn-wrap input[name="selected_event_all"]:checked +  .rsvp-session-btn{
+.session-btn-wrap input[name="acara[]"]:checked + .rsvp-session-btn, .session-btn-wrap input[name="selected_event_all"]:checked +  .rsvp-session-btn{
     background-color: var(--success-clr);
     color: var(--light-clr);
 }
@@ -1875,12 +1875,12 @@ section.protocol.protocol-03 .inner .body .text-01 {
 .rsvp-confirm-btn.not-going:hover {
     background-color: rgba(var(--button-background-primary-rgb), .8);
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.not-going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.not-going {
     background-color: var(--button-background-secondary);
     color: var(--button-text-secondary);
     border: none;
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.not-going:hover {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.not-going:hover {
     background-color: rgba(var(--button-background-secondary-rgb), .8);
 }
 

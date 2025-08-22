@@ -1513,7 +1513,7 @@ section.video-gallery .inner .video-outer .video > .title h2 {
 .rsvp-status-body {
     border-bottom: 1px solid var(--button-background-secondary); ;
 }
-.rsvp-status-wrap input[name="rsvp_status"] {
+.rsvp-status-wrap input[name="kehadiran"] {
     display: none;
     accent-color: var(--text-tertiary);
     appearance: none;
@@ -1525,15 +1525,15 @@ section.video-gallery .inner .video-outer .video > .title h2 {
     width: 30px;
 }
 
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going {
   min-width: 50%;
 }
 
-.rsvp-status-wrap input[name="rsvp_status"]:checked {
+.rsvp-status-wrap input[name="kehadiran"]:checked {
     background: var(--button-background-secondary);
 }
 
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.not-going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.not-going {
 
 }
 /* RSVP Amount */
@@ -1698,7 +1698,7 @@ section.video-gallery .inner .video-outer .video > .title h2 {
 .session-btn-wrap > label {
     flex-basis: calc(40%);
 }
-.session-btn-wrap input[name="selected_event[]"]:checked + .rsvp-session-btn, .session-btn-wrap input[name="selected_event_all"]:checked + .rsvp-session-btn {
+.session-btn-wrap input[name="acara[]"]:checked + .rsvp-session-btn, .session-btn-wrap input[name="selected_event_all"]:checked + .rsvp-session-btn {
     background-color: var(--button-background-secondary);
     color: var(--button-text-secondary);
 }
@@ -1731,7 +1731,7 @@ section.video-gallery .inner .video-outer .video > .title h2 {
     margin-right: 5px;
     transition: background-color .25s ease-in-out;
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + div.rsvp-confirm-btn::before {
+.rsvp-status-wrap input[name="kehadiran"]:checked + div.rsvp-confirm-btn::before {
     background-color: var(--button-background-secondary);
 }
 .rsvp-confirm-wrap div.rsvp-confirm-btn > span {

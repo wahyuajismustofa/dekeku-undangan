@@ -1757,16 +1757,16 @@ section.love-story .story-inner {
 .rsvp-status-body {
   margin-top: 5px;
 }
-.rsvp-status-wrap input[name="rsvp_status"] {
+.rsvp-status-wrap input[name="kehadiran"] {
   display: none;
 }
-.rsvp-status-wrap input[name="rsvp_status"]:checked + .rsvp-confirm-btn.going {
+.rsvp-status-wrap input[name="kehadiran"]:checked + .rsvp-confirm-btn.going {
   background-color: var(--button-background-primary);
   color: var(--button-text-primary);
   min-width: 50%;
 }
 .rsvp-status-wrap
-  input[name="rsvp_status"]:checked
+  input[name="kehadiran"]:checked
   + .rsvp-confirm-btn.not-going {
   background-color: var(--button-background-primary);
   color: var(--button-text-primary);
@@ -1931,7 +1931,7 @@ section.love-story .story-inner {
   color: var(--button-text-secondary);
 }
 
-.session-btn-wrap input[name="selected_event[]"]:checked + .rsvp-session-btn,
+.session-btn-wrap input[name="acara[]"]:checked + .rsvp-session-btn,
 .session-btn-wrap input[name="selected_event_all"]:checked + .rsvp-session-btn {
   background-color: var(--button-background-primary);
   color: var(--button-text-primary);
