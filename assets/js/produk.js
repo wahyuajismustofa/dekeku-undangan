@@ -1,6 +1,6 @@
-import { enrichWithLookups, filterData } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@a42df972f481c6b65261b056e4c49c0883c6cc47//assets/js/utils/jsonHandler.js";
-import { wrapElement, getUniqueId } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@2e0e0138a771860121389aca5ce8e596ca72089a//assets/js/dom/utils.js";
-import { showBuyModalWhatsApp } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@5807f270f247979234a523a78906a3f9ba739ee7//assets/js/dom/modal.js";
+import { enrichWithLookups, filterData } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@a42df972f481c6b65261b056e4c49c0883c6cc47/assets/js/utils/jsonHandler.js";
+import { wrapElement, getUniqueId } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@2e0e0138a771860121389aca5ce8e596ca72089a/assets/js/dom/utils.js";
+import { showBuyModalWhatsApp } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@5807f270f247979234a523a78906a3f9ba739ee7/assets/js/dom/modal.js";
 
 // ================== DATA PRODUK ==================
 const file = {file:"produk", nama: "produk", repo:{username:"wahyuajismustofa",repo:"dekeku"}};

@@ -2311,7 +2311,7 @@ h3.comment-name{
     color: var(--text-secondary) !important;
 }
 
-section.comment-outer .comment-inner button.more-comment,
+section.comment-outer .comment-inner button#moreComment,
 section.comment-outer .weddingWishForm button.send-comment,
 section.comment-outer input,
 section.comment-outer textarea {
@@ -2320,12 +2320,12 @@ section.comment-outer textarea {
 .comment .comment-date a {
     color: var(--button-text-primary);
 }
-section.comment-outer .comment-inner button.more-comment,
+section.comment-outer .comment-inner button#moreComment,
 section.comment-outer .weddingWishForm button.send-comment {
     background-color: var(--button-background-secondary);
     color: var(--button-text-secondary);
 }
-section.comment-outer .comment-inner button.more-comment:hover,
+section.comment-outer .comment-inner button#moreComment:hover,
 section.comment-outer .weddingWishForm button.send-comment:hover {
     background-color: rgba(var(--button-background-secondary-rgb), .8);
     color: var(--button-text-secondary);    

@@ -5,16 +5,18 @@ let filePesan = {};
 let fileTamu = {};
 let fileSeller = {};
 
-_dF.waitForCondition(
-  () => typeof dekeku !== "undefined" && dekeku.ready === true,
-  async () => {
-    await init();
-  },
-  {
-    timeout: 5000,
-    onTimeout: () => console.error("Gagal menunggu dekeku.ready"),
-  }
-);
+export async function init(){
+  _dF.waitForCondition(
+    () => typeof dekeku !== "undefined" && dekeku.ready === true,
+    async () => {
+      await initUndangan();
+    },
+    {
+      timeout: 5000,
+      onTimeout: () => console.error("Gagal menunggu dekeku.ready"),
+    }
+  );  
+}
 
 function getParams(){
   dekeku.params = _dF.readURLParams();
@@ -288,9 +290,20 @@ function showAlert(pesan, status) {
   };
 }
 _dF.showAlert = showAlert;
+window.alert = function(message) {
+  showAlert(message, "error");
+};
 
+function closeAlert() {
+  const alertBox = document.getElementById("alert");
+  alertBox.className = "alert hide";
+  if (alertBox._timeoutId) {
+    clearTimeout(alertBox._timeoutId);
+    alertBox._timeoutId = null;
+  }
+}
 
-async function init(){
+export async function initUndangan(){
   dekeku.prosesJs += 1;
   getParams();
   if(typeof dekeku.params.sellerId === "undefined" ){
@@ -318,6 +331,13 @@ async function init(){
   dekeku.prosesJs -= 1;
 }
 
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 function makeLog(vars) {
     if (!Array.isArray(vars)) {
         console.warn("makeLog: parameter harus berupa array");
@@ -328,3 +348,28 @@ function makeLog(vars) {
         console.log(`${idx + 1}: `, val);
     });
 }
+
+function enterFullscreen(el = document.documentElement) {
+  if (el.requestFullscreen) {
+    el.requestFullscreen();
+  } else if (el.mozRequestFullScreen) {
+    el.mozRequestFullScreen(); // Firefox
+  } else if (el.webkitRequestFullscreen) {
+    el.webkitRequestFullscreen(); // Safari/Chrome
+  } else if (el.msRequestFullscreen) {
+    el.msRequestFullscreen(); // IE/Edge
+  } else {
+    console.warn("Fullscreen API tidak didukung di browser ini.");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const tombol = document.getElementById("startToExplore");
+  if (tombol) {
+    tombol.addEventListener("click", function () {
+      enterFullscreen();
+    });
+  } else {
+    console.warn('Elemen dengan id="startToExplore" tidak ditemukan.');
+  }
+});

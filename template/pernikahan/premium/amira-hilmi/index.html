@@ -44,8 +44,8 @@
   <script src="https://unpkg.com/@phosphor-icons/web">
   </script>
   <!-- Partial -->
-  <link href="/assets/css/universal.css" rel="stylesheet"/>
-  <link href="/assets/css/global.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@b2252b4b6ea6172aa56611df2ee556977ed39e17/assets/css/universal.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@95f156eff4b5df2428d94cd738d51b92a1d50fc6/assets/css/global.css" rel="stylesheet"/>
   <link href="css/custom.css" rel="stylesheet" type="text/css"/>
   <script src="https://unpkg.com/@phosphor-icons/web">
   </script>
@@ -905,22 +905,22 @@
         </div>
         <div class="wedding-gift-sender-data-wrap">
          <div class="form-group">
-          <label for="account_name">
+          <label for="nama_akun">
            Nama Pengirim
           </label>
-          <input class="form-control" id="account_name" name="account_name" placeholder="Nama Anda" required="" type="text"/>
+          <input class="form-control" id="nama_akun" name="nama_akun" placeholder="Nama Anda" required="" type="text"/>
          </div>
          <div class="form-group">
-          <label for="message">
+          <label for="pesan">
            Pesan
           </label>
-          <textarea class="form-control" id="message" name="message" placeholder="Ucapan atau pesan untuk mempelai" rows="2"></textarea>
+          <textarea class="form-control" id="pesan" name="pesan" placeholder="Ucapan atau pesan untuk mempelai" rows="2"></textarea>
          </div>
          <div class="form-group">
-          <label for="amount">
+          <label for="jumlah">
            Nominal
           </label>
-          <input class="form-control" id="amount" name="amount" placeholder="Nominal" required="" type="number"/>
+          <input class="form-control" id="jumlah" name="jumlah" placeholder="Nominal" required="" type="number"/>
          </div>
         </div>
         <div class="wedding-gift-page-wrap">
@@ -944,8 +944,9 @@
       <div class="wedding-wish-body">
        <div class="wedding-wish-form">
         <form class="" id="weddingWishForm">
+<input data-type="timestamp" name="waktu" type="hidden"/>
          <div class="form-group guest-comment-wrap" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1200">
-          <textarea class="form-control guest-comment" name="comment" placeholder="Berikan doa terbaikmu" rows="1"></textarea>
+          <textarea class="form-control guest-comment" name="pesan" placeholder="Berikan doa terbaikmu" rows="1"></textarea>
          </div>
          <input data-type="timestamp" name="waktu" type="hidden"/>
          <div class="submit-comment-wrap" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1200">
@@ -1009,21 +1010,13 @@
       <p>
        Dipersembahkan Oleh
       </p>
-      <a href="https://www.dekeku.my.id" target="_blank">
-       <svg height="40" width="200" xmlns="http://www.w3.org/2000/svg">
-        <style>
-         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
- .bebas {
- font-family: 'Bebas Neue', sans-serif;
- font-size: 35px;
- fill: var(--text-secondary) !important;
- }
-        </style>
-        <text class="bebas" dominant-baseline="middle" text-anchor="middle" x="50%" y="50%">
-         DEKEKU
-        </text>
-       </svg>
+      <a data-dekeku_data_seller='{"home_page":"href"}' href="https://www.dekeku.my.id" target="_blank">
+       <img data-dekeku_data_seller='{"logo2":"src"}' style="width: 200px;padding: 20px 0px;" src=""/>
+      </a>
+      <p>Kontak Pemesanan</p>
+      <a data-dekeku_data_seller='{"linkWa":"href"}' href="" target="_blank" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;text-decoration: none;">
+        <img style="height: 40px;width: auto;padding: 5px;" src="https://ik.imagekit.io/mustofa/web/img/icon-wa.png" />
+        <p style="color: #ffffff;"> <span data-dekeku_data_seller='{"pemilik":"textContent"}'></span></p>
       </a>
      </div>
     </section>
@@ -1158,9 +1151,16 @@
   <div class="modal modal-center" id="modal">
   </div>
   <!-- SCRIPT -->
-  <script src="/assets/js/dekeku.js" type="module">
-  </script>
-  <script defer="" src="/assets/js/datajson.js">
+  <script type="module">
+    import { init } from "/assets/js/dekeku.js";
+    let _dekeku = window._dekeku;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        dekeku.prosesJs += 1;
+        await init();
+        dekeku.prosesJs -= 1;
+        dekeku.proxy.saveDekeku.value = true;
+    });    
   </script>
   <script crossorigin="anonymous" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js">
   </script>
@@ -1172,11 +1172,9 @@
   </script>
   <script crossorigin="anonymous" integrity="sha512-b4rL1m5b76KrUhDkj2Vf14Y0l1NtbiNXwV+SzOzLGv6Tz1roJHa70yr8RmTUswrauu2Wgb/xBJPR8v80pQYKtQ==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js">
   </script>
-  <script src="/assets/js/universal.js">
+  <script src="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@b2252b4b6ea6172aa56611df2ee556977ed39e17/assets/js/universal.js">
   </script>
-  <script src="/assets/js/template.js">
-  </script>
-  <script src="/assets/js/undangan.js">
+  <script src="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@b2252b4b6ea6172aa56611df2ee556977ed39e17/assets/js/template.js">
   </script>
   <script src="js/tema.js">
   </script>

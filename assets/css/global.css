@@ -652,7 +652,7 @@ textarea::-webkit-scrollbar-thumb,
     width: 100%;
     display: block;
 }
-.comment-outer .comment-inner .more-comment {
+.comment-outer .comment-inner .more-comment, button#moreComment {
     padding: 8px 20px;
     outline: none;
     border: none;
@@ -665,7 +665,7 @@ textarea::-webkit-scrollbar-thumb,
     display: block;
     width: 100%;
 }
-.comment-outer .comment-inner .more-comment:hover {
+.comment-outer .comment-inner .more-comment:hover, button#moreComment:hover {
     background: rgba(var(--button-background-primary-rgb), .7);
     color: var(--button-text-primary);
 }
