@@ -219,7 +219,7 @@ function renderDataTamu() {
     dataTamu = dataTamu.map((tamu, index) => ({
     ...tamu,
     id: index + 1,
-    link: `${tamu.link}?d=${dekeku.function.encodeUrlSafe(JSON.stringify({namaTamu: tamu.nama}))}`,
+    link: `${tamu.link}?to=${encodeURIComponent(tamu.nama).replace(/%20/g, "+")}`,
     }));
     const tableColumns = [
     { id: "nama", label: "Nama Tamu", type: "text", value: "nama" },

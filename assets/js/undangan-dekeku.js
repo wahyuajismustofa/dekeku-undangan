@@ -1,25 +1,52 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@215ccb0861eb4c0db7a555e14c6800f8394acca1/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@b2f52eb5792c4d87a345b90dc6f844ecac558c46/assets/js/dekeku.js";
 
-const fileName = "testing-undangan";
+const fileName = "undangan";
 let filePesan = {};
 let fileTamu = {};
-let fileSeller = {};
 
 export async function init(){
-  _dF.waitForCondition(
-    () => typeof dekeku !== "undefined" && dekeku.ready === true,
-    async () => {
-      await initUndangan();
-    },
-    {
-      timeout: 5000,
-      onTimeout: () => console.error("Gagal menunggu dekeku.ready"),
-    }
-  );  
+  await _dF.waitUntilTrue(() => dekeku.ready).then(async () => {
+    dekeku.params = _dF.readURLParams();
+    dekeku.params_1 = _dF.params.getParams();
+    _dF.initDekeku();
+    await initSeller();
+    await initUndangan();
+  }).catch(
+    err => console.error(err.message)
+  );
 }
 
-function getParams(){
-  dekeku.params = _dF.readURLParams();
+async function initSeller(){
+  let sellerId;
+
+  if (typeof window.dekeku_tmp !== "undefined"){
+    sellerId = window.dekeku_tmp.sellerId;
+  }else if (typeof dekeku.params.sellerId !== "undefined"){
+    sellerId = dekeku.params.sellerId;
+  }else{
+    sellerId = 1;
+  }
+
+  let sellerFilter = { id : sellerId };
+  let fileSeller = {file: "data.seller", nama: "seller", obj:true, filter:{ [Object.keys(sellerFilter)] : sellerFilter[Object.keys(sellerFilter)] }, repo:{username:"wahyuajismustofa",repo:"dekeku"}};
+  _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileSeller);
+  await _dF.loadAllData();
+  await configDataSeller(sellerFilter,fileSeller);
+  _dF.updateDataAtt("dekeku_data_seller", dekeku.dataJson[fileSeller.nama]);
+}
+
+async function configDataSeller(sellerFilter , fileSeller) {
+  let sellerSaved = dekeku.dataJson.seller[Object.keys(sellerFilter)];
+  let sellerWritten = sellerFilter[Object.keys(sellerFilter)];
+  let dataValid = sellerSaved === sellerWritten;
+  if(!dataValid){
+    sessionStorage.clear();
+    let index = dekeku.daftarJson.findIndex(item => item.nama === "seller");
+    dekeku.daftarJson[index] = fileSeller;
+    delete dekeku.dataJson[fileSeller.nama];
+    await _dF.loadAllData();
+  }
+  dekeku.dataJson[fileSeller.nama] = _dF.flattenWithPrefix(dekeku.dataJson[fileSeller.nama],"sosialMedia");
 }
 
 function gantiIsiClass(className, nilaiBaru) {
@@ -42,7 +69,7 @@ function gantiIsiClass(className, nilaiBaru) {
 
 function initRSVP() {
   const container = document.getElementById("rsvpContainer");
-  if (!container || !dekeku.params.namaTamu) return;  
+  if (!container || !dekeku.params_1.to) return;  
   renderRSVP();
 
   dekeku.proxy[fileTamu.nama] = _dF.makeFlagProxy(renderRSVP);
@@ -58,7 +85,7 @@ function initRSVP() {
 
 function renderRSVP(set) {
   const container = document.getElementById("rsvpContainer");
-  if (!container || !dekeku.params.namaTamu) return;
+  if (!container || !dekeku.params_1.to) return;
   const kehadiran = set || dekeku?.dataJson?.tamu?.kehadiran || "";
 
   let html = "";
@@ -94,7 +121,7 @@ function renderRSVP(set) {
   } else {
     const aksi = kehadiran === "update" ? "github-update" : "github-post";
     const filter = kehadiran === "update" 
-      ? JSON.stringify({ nama: dekeku.params.namaTamu })
+      ? JSON.stringify({ nama: dekeku.params_1.to })
       : undefined;
 
     html = `
@@ -135,7 +162,7 @@ function renderRSVP(set) {
           </div>
         </div>
 
-        <input type="hidden" name="nama" value="${dekeku.params.namaTamu}">
+        <input type="hidden" name="nama" value="${dekeku.params_1.to}">
         
         <!-- Submit -->
         <div class="rsvp-confirm-wrap" data-aos="fade-up" data-aos-duration="1200">
@@ -179,7 +206,7 @@ function initFormKomentar(){
   const inputNamaTamu = document.createElement("input");
   inputNamaTamu.type = "hidden";
   inputNamaTamu.name = "nama";
-  inputNamaTamu.value = dekeku.params.namaTamu;
+  inputNamaTamu.value = dekeku.params_1.to;
 
   commentForm.appendChild(inputNamaTamu);
 }
@@ -305,26 +332,17 @@ function closeAlert() {
 
 export async function initUndangan(){
   dekeku.prosesJs += 1;
-  getParams();
-  if(typeof dekeku.params.sellerId === "undefined" ){
-    dekeku.params.sellerId = 1;
-    _dF.writeURLParams(dekeku.params);
-  }
-
   filePesan = {file:`${fileName}.pesan`, nama: "pesan"};
-  fileTamu = {file:`${fileName}.tamu`, nama: "tamu", obj:true, filter:{nama: dekeku.params.namaTamu}};
-  fileSeller = {file: "data.seller", nama: "seller", obj:true, filter:{id: dekeku.params.sellerId}, repo:{username:"wahyuajismustofa",repo:"dekeku"}};
-  _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileTamu,filePesan,fileSeller);
+  fileTamu = {file:`${fileName}.tamu`, nama: "tamu", obj:true, filter:{nama: dekeku.params_1.to}};
+  _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileTamu,filePesan);
   await _dF.loadAllData();
 
-  if(typeof dekeku.params.namaTamu === "undefined" ){
-    dekeku.params.namaTamu = dekeku.dataJson.seller.nama;
-    _dF.writeURLParams(dekeku.params);
+  if(typeof dekeku.params_1.to === "undefined" ){
+    dekeku.params_1.to = dekeku.dataJson.seller.nama;
+    _dF.params.setParam("to", dekeku.params_1.to);
   }
 
-  gantiIsiClass("nama",dekeku.params.namaTamu);
-  dekeku.dataJson.seller.linkWa = `https://wa.me/${dekeku.dataJson.seller.kontak}`;
-  _dF.updateDataAtt("dekeku_data_seller", dekeku.dataJson.seller);
+  gantiIsiClass("nama",dekeku.params_1.to);
   initRSVP();
   initFormKomentar();
   _dF.initDekeku();
@@ -362,6 +380,7 @@ function enterFullscreen(el = document.documentElement) {
     console.warn("Fullscreen API tidak didukung di browser ini.");
   }
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const tombol = document.getElementById("startToExplore");

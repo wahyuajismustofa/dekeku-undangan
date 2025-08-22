@@ -1,4 +1,4 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@e57818d012691c1e2423076d12d194a9812e3c96/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@b2f52eb5792c4d87a345b90dc6f844ecac558c46/assets/js/dekeku.js";
 export default dekeku;
 
 export async function init() {
@@ -31,20 +31,10 @@ async function configDataSeller(sellerFilter , fileSeller) {
     delete dekeku.dataJson[fileSeller.nama];
     await _dF.loadAllData();
   }
-  dekeku.dataJson[fileSeller.nama] = flattenWithPrefix(dekeku.dataJson[fileSeller.nama],"sosialMedia");
+  dekeku.dataJson[fileSeller.nama] = _dF.flattenWithPrefix(dekeku.dataJson[fileSeller.nama],"sosialMedia");
   dekeku.dataJson[fileSeller.nama].params = encodeUrlSafe(JSON.stringify({sellerId: dekeku.dataJson[fileSeller.nama].id}));
 }
 
-function flattenWithPrefix(data,prefix) {
-  let newData = { ...data };
-  if (data[prefix]) {
-    Object.entries(data[prefix]).forEach(([key, value]) => {
-      newData[`${prefix}_${key}`] = value;
-    });
-  }
-
-  return newData;
-}
 function encodeUrlSafe(str) {
   return btoa(str)
     .replace(/\+/g, "-")
