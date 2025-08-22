@@ -1,4 +1,4 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@3d7d7a3fbe19ab80ff32dd9f3e153fd0971bad0d/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@215ccb0861eb4c0db7a555e14c6800f8394acca1/assets/js/dekeku.js";
 
 const fileName = "testing-undangan";
 let filePesan = {};
@@ -300,7 +300,7 @@ async function init(){
 
   filePesan = {file:`${fileName}.pesan`, nama: "pesan"};
   fileTamu = {file:`${fileName}.tamu`, nama: "tamu", obj:true, filter:{nama: dekeku.params.namaTamu}};
-  fileSeller = {file: "data.seller", nama: "seller", obj:true, filter:{id: dekeku.params.sellerId}};
+  fileSeller = {file: "data.seller", nama: "seller", obj:true, filter:{id: dekeku.params.sellerId}, repo:{username:"wahyuajismustofa",repo:"dekeku"}};
   _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileTamu,filePesan,fileSeller);
   await _dF.loadAllData();
 
@@ -311,46 +311,11 @@ async function init(){
 
   gantiIsiClass("nama",dekeku.params.namaTamu);
   dekeku.dataJson.seller.linkWa = `https://wa.me/${dekeku.dataJson.seller.kontak}`;
-  updateDataAtt("dekeku_data_seller", dekeku.dataJson.seller);
+  _dF.updateDataAtt("dekeku_data_seller", dekeku.dataJson.seller);
   initRSVP();
   initFormKomentar();
   _dF.initDekeku();
   dekeku.prosesJs -= 1;
-}
-
-function updateDataAtt(attrName, dataObj) {
-    const elements = document.querySelectorAll(`[data-${attrName}]`);
-
-    elements.forEach(el => {
-        let currentData = {};
-        try {
-            currentData = JSON.parse(el.getAttribute(`data-${attrName}`) || "{}");
-        } catch (e) {
-            console.warn(`Gagal parsing data-${attrName}:`, e);
-        }
-
-        // Mapping key -> atribut DOM, dan ambil value dari dataObj
-        const updatedData = {};
-        for (const key in currentData) {
-            const attr = currentData[key]; // contoh: "src" atau "textContent"
-            if (dataObj.hasOwnProperty(key)) {
-                const value = dataObj[key];
-
-                // Update elemen sesuai jenis atribut/properti
-                if (attr in el) {
-                    el[attr] = value;          // properti DOM
-                } else {
-                    el.setAttribute(attr, value); // fallback untuk atribut HTML
-                }
-            }
-        }
-
-        // Simpan kembali ke data-*
-        el.removeAttribute(`data-${attrName}`);
-
-        // Debug log
-        makeLog([el]);
-    });
 }
 
 function makeLog(vars) {
