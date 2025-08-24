@@ -1,25 +1,28 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@b2f52eb5792c4d87a345b90dc6f844ecac558c46/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@f938652d8a5505826c5f3b64f1ce819286a30c52/assets/js/dekeku.js";
 
+export {dekeku};
 const fileName = "undangan";
 let filePesan = {};
 let fileTamu = {};
 
 export async function init(){
-  await _dF.waitUntilTrue(() => dekeku.ready).then(async () => {
+  try{
+    await _dF.waitUntilTrue(() => typeof dekeku !== "undefined" && dekeku.ready === true);
     dekeku.params = _dF.readURLParams();
     dekeku.params_1 = _dF.params.getParams();
     _dF.initDekeku();
     await initSeller();
     await initUndangan();
-  }).catch(
-    err => console.error(err.message)
-  );
+
+  }catch (err) {
+      console.error("❌ Gagal:", err.message);
+  }
 }
 
 async function initSeller(){
   let sellerId;
 
-  if (typeof window.dekeku_tmp !== "undefined"){
+  if (typeof window.dekeku_tmp.sellerId !== "undefined"){
     sellerId = window.dekeku_tmp.sellerId;
   }else if (typeof dekeku.params.sellerId !== "undefined"){
     sellerId = dekeku.params.sellerId;

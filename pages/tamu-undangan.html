@@ -204,6 +204,7 @@
     "produk"
     ]);
     document.addEventListener('DOMContentLoaded', async () => {
+        dekeku.prosesJs = dekeku.prosesJs || 0;
         dekeku.prosesJs += 1;
         await init();
         await initSeller({id: dekeku.params.sellerId});

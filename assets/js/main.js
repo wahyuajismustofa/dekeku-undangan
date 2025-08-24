@@ -1,4 +1,4 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@b2f52eb5792c4d87a345b90dc6f844ecac558c46/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@f938652d8a5505826c5f3b64f1ce819286a30c52/assets/js/dekeku.js";
 export default dekeku;
 
 export async function init() {

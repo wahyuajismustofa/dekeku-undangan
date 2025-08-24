@@ -1,3 +1,4 @@
+let settingUndangan = window.dekeku_tmp.set.undangan
 // Dummy postData untuk menghindari error ReferenceError jika tidak ada implementasi asli
 function postData(data, onSuccess, onError, beforeSend) {
     if (typeof beforeSend === 'function') beforeSend();
@@ -214,9 +215,9 @@ var isCoverPlayed = false;
     }
 
     // COVERS
-    if (typeof window.COVERS != 'undefined') {
+    if (typeof settingUndangan.covers != 'undefined') {
         // COVERS LOOP
-        $(window.COVERS).each(function(i, cover){
+        $(settingUndangan.covers).each(function(i, cover){
 
             var position = cover.position,      // position
                 details = cover.details,        // details
@@ -291,9 +292,9 @@ var isCoverPlayed = false;
 ============================================= */
 // ----------- COUNTDOWN (Function) ------------------------------------------------------
 (function countdown(){
-    if (typeof window.EVENT != 'undefined') {
-        var schedule = window.EVENT,
-            event = new Date(schedule * 1000).getTime(),
+    if (typeof settingUndangan.event != 'undefined') {
+        var schedule = settingUndangan.event,
+            event = new Date(schedule).getTime(),
             start = setInterval(rundown, 1000);
 
         // Rundown
@@ -621,7 +622,7 @@ $(document).on('click', '.wedding-gift__prev', weeding_gift_prev);
 var init_wedding_gift = function() {        
 
     // Bank Options
-    if (typeof window.BANK_OPTIONS !== 'undefined' && window.BANK_OPTIONS) {
+    if (typeof settingUndangan.bank_option !== 'undefined' && settingUndangan.bank_option) {
 
         var el = $('select#selectBank').get(0);
 
@@ -633,7 +634,7 @@ var init_wedding_gift = function() {
                             valueField: 'id',
                             labelField: 'title',
                             searchField: ['title', 'credential'],
-                            options: (window.BANK_OPTIONS ? window.BANK_OPTIONS : []),
+                            options: (settingUndangan.bank_option ? settingUndangan.bank_option : []),
                             render: {
                                 item: function(item, escape) {
                                     var title = item.title;
@@ -669,7 +670,7 @@ var init_wedding_gift = function() {
 
 
             // Select Bank
-            var selected = selected_selectize( selectize, window.BANK_OPTIONS[0]['id'] );
+            var selected = selected_selectize( selectize, settingUndangan.bank_option[0]['id'] );
 
             // Trigger Select
             $(el).val(selectize.getValue()).trigger('change');
@@ -961,14 +962,14 @@ var AudioManager = {
 
     // Initialize audio system
     init: function(config) {
-        if (typeof window.MUSIC === 'undefined' || !window.MUSIC.url) {
+        if (typeof settingUndangan.music === 'undefined' || !settingUndangan.music.url) {
             // console.log('No music configuration found');
             return;
         }
 
         this.config = {
-            url: window.MUSIC.url,
-            box: window.MUSIC.box,
+            url: settingUndangan.music.url,
+            box: settingUndangan.music.box,
             volume: config?.volume || 0.5,
             // fadeInDuration: config?.fadeInDuration || 2000,
             retryDelay: config?.retryDelay || 1000
@@ -2359,6 +2360,7 @@ var func_kado_init = function () {
 ============================================= */
 $(document).ready(function(){
 
+    // ======================================================================================
     // body height
     $('body').css({'--body-height': `${window.visualViewport.height}px`});
     
@@ -2372,7 +2374,6 @@ $(document).ready(function(){
     $('p, label').each(function(i, el) {
         el.innerHTML = urlify(el.innerHTML);
     });
-
 
     // ---------- Checking the Quantity Control value --------------------------------------------------
     $('[data-quantity="control"]').each(function(i, input){
@@ -2423,13 +2424,7 @@ $(document).ready(function(){
         // If RSVP Inner has 'no-news' class
         $(rsvpInner).find('.rsvp-form').fadeIn();
         $(rsvpInner).find('.rsvp-confirm').fadeOut();
-    }    
-
-});
-
-
-// Scroll to top
-$(document).ready(function(){
+    }
+    // --------------- scrollToTop ----------------------------------------------
     $(window).scrollTop(0);
 });
-

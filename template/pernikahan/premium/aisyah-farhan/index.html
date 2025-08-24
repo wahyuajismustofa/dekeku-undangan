@@ -50,8 +50,8 @@
   <script src="https://unpkg.com/@phosphor-icons/web">
   </script>
   <!-- Partial -->
-  <link href="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@b2252b4b6ea6172aa56611df2ee556977ed39e17/assets/css/universal.css" rel="stylesheet"/>
-  <link href="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@cf3e3a191237703eb5b2182879a57af68e4402a9/assets/css/global.css" rel="stylesheet"/>
+  <link href="/assets/css/universal.css" rel="stylesheet"/>
+  <link href="/assets/css/global.css" rel="stylesheet"/>
   <link href="css/custom.css" rel="stylesheet" type="text/css"/>
   <link href="css/tema.css" rel="stylesheet"/>
   <style>
@@ -1924,30 +1924,6 @@
    <div class="music-box auto" id="music-box">
    </div>
   </section>
-  <script>
-   // Music
-var MUSIC = {
-'url': 'https://audio.jukehost.co.uk/8YrhtWpuQb7niURbT4ttepM8CJjdk1Nv',
-'box': '#music-box'
-};
-
-// Banks
-var BANK_OPTIONS = [{"id": 1, "title": "GOPAY", "credential": "085161517176", "name": "Wahyu Ajis Mustofa", "icon": "https://ik.imagekit.io/mustofa/web/undangan-web/gopay.webp"}, {"id": 2, "title": "DANA", "credential": "085161517176", "name": "Wahyu Ajis Mustofa", "icon": "https://ik.imagekit.io/mustofa/web/undangan-web/ovo.webp"}, {"id": 3, "title": "OVO", "credential": "085161517176", "name": "Wahyu Ajis Mustofa", "icon": "https://ik.imagekit.io/mustofa/web/undangan-web/dana.webp"}];
-
-// Covers
-var COVERS = [
-{
-position: 'MAIN',
-details: {
-desktop: "<div class=\"picture desktop\">\n <img src=\"https:\/\/ik.imagekit.io\/mustofa\/web\/undangan-web\/mempelai-4.webp\" alt=\"\">\n<\/div>",
-mobile: "<div class=\"picture mobile\">\n <img src=\"https:\/\/ik.imagekit.io\/mustofa\/web\/undangan-web\/mempelai-4.webp\" alt=\"\">\n<\/div>"},
-element: '#cover-main',
-options: {
-variableWidth: false,
-}
-}
-];
-  </script>
   <!-- ALERT -->
   <div class="alert" id="alert">
    <div class="alert-text">
@@ -1959,11 +1935,62 @@ variableWidth: false,
   <div class="modal modal-center" id="modal">
   </div>
   <!-- SCRIPT -->
-  <script type="module">
-    import { init } from "/assets/js/undangan-dekeku.js";
-    let _dekeku = window._dekeku;
+    <script>
+        window.dekeku_tmp = {};
+        // window.dekeku_tmp.sellerId = 2;
+        window.dekeku_tmp.set = {};
+        window.dekeku_tmp.set.undangan = 
+        {
+            event : "2030-03-03T09:00:00+07:00",
+            bank_option: 
+            [
+                {
+                    "id":1,
+                    "title":"GOPAY",
+                    "credential":"085161517176",
+                    "name":"Wahyu Ajis Mustofa"
+                },
+                {
+                    "id":2,
+                    "title":"DANA",
+                    "credential":"085161517176",
+                    "name":"Wahyu Ajis Mustofa"
+                },
+                {
+                    "id":3,
+                    "title":"OVO",
+                    "credential":"085161517176",
+                    "name":"Wahyu Ajis Mustofa"
+                }
+            ],
+            covers: 
+            [
+              {
+                position: 'MAIN',
+                details: {
+                  desktop: "<div class=\"picture desktop\">\n <img src=\"https:\/\/ik.imagekit.io\/mustofa\/web\/undangan-web\/mempelai-4.webp\" alt=\"\">\n<\/div>",
+                  mobile: "<div class=\"picture mobile\">\n <img src=\"https:\/\/ik.imagekit.io\/mustofa\/web\/undangan-web\/mempelai-4.webp\" alt=\"\">\n<\/div>"
+                  },
+                element: '#cover-main',
+                options: {
+                  variableWidth: false,
+                }
+              }
+            ],
+            music:
+            {
+                'url': 'https://audio.jukehost.co.uk/8YrhtWpuQb7niURbT4ttepM8CJjdk1Nv',
+                'box': '#music-box'
+            }
+        
+        };
+
+    </script>
+    <script type="module">
+    import { dekeku, init } from "/assets/js/undangan-dekeku.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
+        dekeku.prosesJs = dekeku.prosesJs || 0;
         dekeku.prosesJs += 1;
         await init();
         dekeku.prosesJs -= 1;
@@ -1980,23 +2007,11 @@ variableWidth: false,
   </script>
   <script crossorigin="anonymous" integrity="sha512-b4rL1m5b76KrUhDkj2Vf14Y0l1NtbiNXwV+SzOzLGv6Tz1roJHa70yr8RmTUswrauu2Wgb/xBJPR8v80pQYKtQ==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js">
   </script>
-  <script src="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@b2252b4b6ea6172aa56611df2ee556977ed39e17/assets/js/universal.js">
+  <script src="/assets/js/undangan-premium/universal.js">
   </script>
-  <script src="https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@b2252b4b6ea6172aa56611df2ee556977ed39e17/assets/js/template.js">
+  <script src="/assets/js/undangan-premium/template.js">
   </script>
   <script src="js/tema.js">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/countdown@2.6.0/countdown.min.js">
-  </script>
-  <script>
-   const end = new Date("2030-03-03T09:00:00");
-
-countdown(end, ts => {
-document.querySelector(".count-day").textContent = ts.days;
-document.querySelector(".count-hour").textContent = ts.hours;
-document.querySelector(".count-minute").textContent = ts.minutes;
-document.querySelector(".count-second").textContent = ts.seconds;
-}, countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS);
   </script>
  </body>
 </html>

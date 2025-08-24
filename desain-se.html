@@ -114,6 +114,7 @@
     let slug = location.pathname.split("/").pop().split(".")[0];
     if (slug === "" || slug === "index")slug = 'dekeku';
     document.addEventListener('DOMContentLoaded', async () => {
+        dekeku.prosesJs = dekeku.prosesJs || 0;
         dekeku.prosesJs += 1;
         await init();
         await initSeller({slug: slug});
