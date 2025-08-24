@@ -620,9 +620,36 @@ $(document).on('click', '.wedding-gift__prev', weeding_gift_prev);
 
 // Init Wedding Gift
 var init_wedding_gift = function() {        
-
     // Bank Options
     if (typeof settingUndangan.bank_option !== 'undefined' && settingUndangan.bank_option) {
+        if ($("#bankOption").length) {
+            // Target elemen
+            const $bankContainer = $("#bankOption");
+            $bankContainer.empty();
+            
+            $.each(settingUndangan.bank_option, function (i, bank) {
+                const $bankItem = $(`
+                    <div class="bank-item" id="savingBook${bank.id}">
+                        <div class="bank-detail">
+                            <h3 class="bank-name">${bank.title}</h3>
+                            <div>
+                                <small class="bank-account-number-label">No. Rekening</small>
+                                <h4 class="bank-account-number" data-copy="${bank.credential}">
+                                    ${bank.credential}
+                                    <i class="fas fa-clone fa-flip-horizontal ic-copy"></i>
+                                </h4>
+                            </div>
+                            <div>
+                                <small class="bank-account-name-label">a/n</small>
+                                <h4 class="bank-account-name">${bank.name}</h4>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                $bankContainer.append($bankItem);
+            });        
+        }
 
         var el = $('select#selectBank').get(0);
 
