@@ -87,7 +87,7 @@ export const template ={
         <p class="text-gray font-small mt-2">
         Hubungi kami untuk konsultasi keperluan anda.
         </p>
-        <form data-aksi="custom-whatsapp" data-keterangan="testing" data-dekeku_data_seller='{"kontak":"data-kontak"}'>
+        <form data-aksi="custom-whatsapp" data-keterangan="Undangan Digital" data-dekeku_data_seller='{"kontak":"data-kontak"}'>
         <div class="form-row mb-2">
         <div class="col-12">
             <label class="h6 font-weight-normal d-none" for="footer-pesan-wa">
