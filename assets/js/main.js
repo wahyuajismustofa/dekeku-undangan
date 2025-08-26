@@ -1,4 +1,4 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@f938652d8a5505826c5f3b64f1ce819286a30c52/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@f1d529a7f7c401db669f258c045294732b6ff138/assets/js/dekeku.js";
 export default dekeku;
 
 export async function init() {
@@ -16,7 +16,7 @@ export async function initSeller(sellerFilter){
   _dF.pushUniqueObj(dekeku.daftarJson,"nama",fileSeller);
   await _dF.loadAllData();
   await configDataSeller(sellerFilter,fileSeller);
-  _dF.updateDataAtt("dekeku_data_seller", dekeku.dataJson[fileSeller.nama]);
+  await _dF.updateDataAtt("dekeku_data_seller", dekeku.dataJson[fileSeller.nama]);
   applyDataParamsToHref();
 }
 
