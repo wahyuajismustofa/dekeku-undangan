@@ -78,6 +78,14 @@ export const template ={
             </span>
         </a>
         </li>
+        <li class="mr-2">
+          <button id="btnShare" 
+                  class="btn btn-icon-only btn-pill btn-primary" 
+                  data-placement="top" data-toggle="tooltip" 
+                  title="Bagikan Link">
+            <span aria-hidden="true" class="fas fa-share-alt"></span>
+          </button>
+        </li>        
         </ul>
         </div>
         <div class="col-lg-6">

@@ -1,6 +1,5 @@
-import { enrichWithLookups, filterData } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@a42df972f481c6b65261b056e4c49c0883c6cc47/assets/js/utils/jsonHandler.js";
-import { wrapElement, getUniqueId } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@2e0e0138a771860121389aca5ce8e596ca72089a/assets/js/dom/utils.js";
-import { showBuyModalWhatsApp } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@5807f270f247979234a523a78906a3f9ba739ee7/assets/js/dom/modal.js";
+import { enrichWithLookups, filterData } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@main/assets/js/utils/jsonHandler.js";
+import { wrapElement, getUniqueId } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@main/assets/js/dom/utils.js";
 
 // ================== DATA PRODUK ==================
 const file = {file:"produk", nama: "produk", repo:{username:"wahyuajismustofa",repo:"dekeku"}};
@@ -188,19 +187,23 @@ function loadMoreProduk({ data, container, produkId }) {
 
   function loadMore() {
     const slice = data.slice(currentIndex, currentIndex + PRODUK_PER_HALAMAN);
-
     slice.forEach((tema) => {
       const card = document.createElement("div");
       card.className = "col-6 col-sm-6 col-lg-3 mb-3 p-2";
       let linkRel = tema.link_produk.split("https://undangan.dekeku.my.id").pop();
-
+      let orderJson = JSON.stringify({
+        Nama: capitalizeWords(tema.nama),
+        Acara: capitalizeWords(tema.acara),
+        Tema: capitalizeWords(tema.tema),
+        Link: `${tema.link_produk}?d=${params}`
+      });
       card.innerHTML = `
         <div class="card bg-primary shadow-soft border-light overflow-hidden">
           <img src="${tema.img}" alt="${tema.nama}">
           <div class="card-footer border-top border-light p-4">
             <a href="${linkRel}?d=${params}" class="p">${tema.nama}</a>
             <div class="d-flex justify-content-around align-items-center mt-3">
-              <button class="btn btn-icon-only btn-buy" data-tema-id='${tema.id}'>
+              <button class="btn btn-icon-only btn-buy" data-event_click="button-whatsapp-order" data-produk='${orderJson}' data-kontak="${window._dekeku.dataJson.seller.kontak}" data-tema-id='${tema.id}'>
                 <span class="fab fa-whatsapp"></span>
               </button>
               <a class="btn btn-icon-only" href="${linkRel}?d=${params}" target=_blank data-placement="bottom" data-toggle="tooltip" title="Lihat">
@@ -247,25 +250,7 @@ function loadMoreProduk({ data, container, produkId }) {
       btn.onclick = loadMore;
       btnWrapper.appendChild(btn);
     }
-  }
-  if (!document.body._hasBtnBuyListener) {
-    document.body._hasBtnBuyListener = true;
-
-    document.body.addEventListener('click', function (e) {
-      const btn = e.target.closest('.btn-buy');
-      if (!btn) return;
-
-      const id = btn.dataset.temaId;
-      const tema = dataProduk.find(p => p.id == id);
-      if (!tema) {
-        showAlert('Produk tidak ditemukan.', 'error');
-        return;
-      }
-
-      showBuyModalWhatsApp(tema, _dekeku.dataJson.seller.kontak);
-    });
-  }
-  
+  }  
   loadMore();
 }
 function encodeUrlSafe(str) {
@@ -273,4 +258,12 @@ function encodeUrlSafe(str) {
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
     .replace(/=+$/, "");
+}
+
+function capitalizeWords(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }

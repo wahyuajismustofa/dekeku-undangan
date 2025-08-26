@@ -1,7 +1,8 @@
-import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@f1d529a7f7c401db669f258c045294732b6ff138/assets/js/dekeku.js";
+import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@fd1fd81f4c842a66d71a5cc578291a8b19db20ba/assets/js/dekeku.js";
 export default dekeku;
 
 export async function init() {
+  setupShareButton();
   await _dF.waitUntilTrue(() => dekeku.ready).then(() => {
     dekeku.params = _dF.readURLParams();
     _dF.initDekeku();
@@ -54,3 +55,29 @@ function applyDataParamsToHref() {
   });
 }
 _dF.encodeUrlSafe = encodeUrlSafe;
+
+function setupShareButton(buttonSelector = "#btnShare") {
+  const btn = document.querySelector(buttonSelector);
+  if (!btn) return;
+
+  btn.addEventListener("click", async () => {
+    const url = window.location.href;
+    const title = document.title || "Bagikan halaman ini";
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url });
+        console.log("Link berhasil dibagikan");
+      } catch (err) {
+        console.error("Gagal membagikan:", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        alert("Link disalin ke clipboard:\n" + url);
+      } catch (err) {
+        console.error("Clipboard gagal:", err);
+      }
+    }
+  });
+}
