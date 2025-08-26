@@ -3,7 +3,7 @@ export const template ={
   <header class="header-global fixed-top" id="header-global">
     <nav aria-label="Primary navigation" class="navbar navbar-main navbar-expand-lg navbar-theme-primary headroom navbar-light navbar-theme-primary" id="navbar-main">
     <div class="container position-relative">
-    <a data-dekeku_data_seller='{"home_page":"href"}' class="navbar-brand shadow-soft py-2 px-3 rounded border border-light mr-lg-4" href="/">
+    <a data-dekeku_data_seller='{"home_page":"href"}' class="navbar-brand shadow-soft py-2 px-3 rounded border border-light mr-lg-4" style="background: #FFF;" href="/">
     <img data-dekeku_data_seller='{"favicon":"src"}' alt="Logo light" class="navbar-brand-dark" src="/assets/img/brand/dark-1.svg"/>
     <img data-dekeku_data_seller='{"favicon":"src"}' alt="Logo dark" class="navbar-brand-light" src="/assets/img/brand/dark-1.svg"/>
     </a>
@@ -147,12 +147,11 @@ export const template ={
         </strong>
         menyediakan berbagai undangan digital dengan desain elegan, interaktif, dan personal untuk momen istimewa Anda.
        </p>
-       <img alt="Ilustrasi Produk Digital" class="img-fluid" src="/assets/img/illustrations/product-tour.svg" style="max-height: 160px;"/>
       </div>
      </div>
     </div>
    </div>
-   <div class="section section-lg">
+   <div class="section section-lg pt-0">
     <div class="container">
      <div class="text-center d-flex flex-wrap justify-content-around" data-element="filter-produk">
      </div>

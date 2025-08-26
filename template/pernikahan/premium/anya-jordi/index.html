@@ -24,7 +24,7 @@
   <meta content="https://ik.imagekit.io/mustofa/web/undangan-web/preview-anya-jordi.webp" property="twitter:image"/>
   <!-- Favicon -->
   <link href="https://ik.imagekit.io/mustofa/web/seller/logo/favicon-dekeku.png" rel="apple-touch-icon" sizes="120x120"/>
-  <link href="https://ik.imagekit.io/mustofa/web/seller/logo/favicon-dekeku.png" rel="icon" type="image/png"/>  
+  <link href="https://ik.imagekit.io/mustofa/web/seller/logo/favicon-dekeku.png" rel="icon" type="image/png"/>
   <script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js">
   </script>
   <title>
@@ -94,7 +94,7 @@
       Bapak/Ibu/Saudara/i
       <br/>
       <span class="data-nama">
-       Tamu Undangan
+       
       </span>
      </p>
      <div data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
@@ -580,7 +580,7 @@
      </h1>
     </div>
     <form class="weddingWishForm" id="weddingWishForm">
-<input data-type="timestamp" name="waktu" type="hidden"/>
+     <input data-type="timestamp" name="waktu" type="hidden"/>
      <div class="form-group">
       <textarea class="form-control" data-aos="fade-down" data-aos-duration="1000" name="pesan" placeholder="Berikan ucapan..." rows="1" style="max-height: 350px;"></textarea>
      </div>
@@ -679,21 +679,26 @@
    </div>
   </section>
   <!-- FOOTER -->
-    <section class="footer">
-     <div class="footer-inner flex-column">
-      <p>
-       Dipersembahkan Oleh
-      </p>
-      <a data-dekeku_data_seller='{"home_page":"href"}' href="https://www.dekeku.my.id" target="_blank">
-       <img data-dekeku_data_seller='{"logo2":"src"}' style="width: 200px;padding: 20px 0px;" src=""/>
-      </a>
-      <p>Kontak Pemesanan</p>
-      <a data-dekeku_data_seller='{"sosialMedia_whatsApp":"href"}' href="" target="_blank" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;text-decoration: none;">
-        <img style="height: 40px;width: auto;padding: 5px;" src="https://ik.imagekit.io/mustofa/web/img/icon-wa.png" />
-        <p style="color: #ffffff;"> <span data-dekeku_data_seller='{"pemilik":"textContent"}'></span></p>
-      </a>
-     </div>
-    </section>
+  <section class="footer">
+   <div class="footer-inner flex-column">
+    <p>
+     Dipersembahkan Oleh
+    </p>
+    <a data-dekeku_data_seller='{"home_page":"href"}' href="https://www.dekeku.my.id" target="_blank">
+     <img data-dekeku_data_seller='{"logo2":"src"}' src="" style="width: 200px;padding: 20px 0px;"/>
+    </a>
+    <p>
+     Kontak Pemesanan
+    </p>
+    <a data-dekeku_data_seller='{"sosialMedia_whatsApp":"href"}' href="" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;text-decoration: none;" target="_blank">
+     <img src="https://ik.imagekit.io/mustofa/web/img/icon-wa.png" style="height: 40px;width: auto;padding: 5px;"/>
+     <p style="color: #ffffff;">
+      <span data-dekeku_data_seller='{"pemilik":"textContent"}'>
+      </span>
+     </p>
+    </a>
+   </div>
+  </section>
   <!-- MUSIC -->
   <section class="music-outer" data-aos="fade-up" data-aos-delay="300" data-aos-duration="1000">
    <div class="music-box auto" id="music-box">
@@ -710,8 +715,8 @@
   <div class="modal modal-center" id="modal">
   </div>
   <!-- SCRIPT -->
-    <script>
-        window.dekeku_tmp = {};
+  <script>
+   window.dekeku_tmp = {};
         // window.dekeku_tmp.sellerId = 2;
         window.dekeku_tmp.set = {};
         window.dekeku_tmp.set.undangan = 
@@ -764,9 +769,9 @@
             }
         
         };
-    </script>
-    <script type="module">
-    import { dekeku, init } from "/assets/js/undangan-dekeku.js";
+  </script>
+  <script type="module">
+   import { dekeku, init } from "/assets/js/undangan-dekeku.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
         dekeku.prosesJs = dekeku.prosesJs || 0;
@@ -774,9 +779,8 @@
         await init();
         dekeku.prosesJs -= 1;
         dekeku.proxy.saveDekeku.value = true;
-    });    
+    });
   </script>
-
   <script crossorigin="anonymous" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js">
   </script>
   <script crossorigin="anonymous" integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js">

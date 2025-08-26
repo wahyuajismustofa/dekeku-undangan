@@ -24,7 +24,7 @@
   <meta content="https://ik.imagekit.io/mustofa/web/undangan-web/preview-dea-habib.webp" property="twitter:image"/>
   <!-- Favicon -->
   <link href="https://ik.imagekit.io/mustofa/web/seller/logo/favicon-dekeku.png" rel="apple-touch-icon" sizes="120x120"/>
-  <link href="https://ik.imagekit.io/mustofa/web/seller/logo/favicon-dekeku.png" rel="icon" type="image/png"/>  
+  <link href="https://ik.imagekit.io/mustofa/web/seller/logo/favicon-dekeku.png" rel="icon" type="image/png"/>
   <script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js">
   </script>
   <title>
@@ -140,7 +140,7 @@
        Hai
        <br/>
        <span class="data-nama">
-        Tamu Undangan
+        
        </span>
       </p>
      </div>
@@ -163,7 +163,7 @@
         Hai
         <br/>
         <span class="data-nama">
-         Tamu Undangan
+         
         </span>
        </p>
        <div class="link-wrap" data-aos="fade-up" data-aos-delay="500" data-aos-duration="1200">
@@ -593,7 +593,7 @@
       </div>
       <div class="wedding-gift-body">
        <div class="wedding-weddingGiftForm">
-        <form id="weddingGiftForm" data-aksi="custom-whatsapp" data-keterangan="konfirmasi kado" data-kontak="6285161517176" >
+        <form data-aksi="custom-whatsapp" data-keterangan="konfirmasi kado" data-kontak="6285161517176" id="weddingGiftForm">
          <!-- Details -->
          <div class="wedding-gift-details wedding-gift__first-slide wedding-gift-slide">
           <!-- Select Bank -->
@@ -602,7 +602,8 @@
            </select>
           </div>
           <!-- Bank Wrap -->
-          <div class="wedding-gift-bank-wrap" id="bankOption" data-aos="fade-up" data-aos-duration="1200"></div>
+          <div class="wedding-gift-bank-wrap" data-aos="fade-up" data-aos-duration="1200" id="bankOption">
+          </div>
           <!-- Sender Data -->
           <div class="wedding-gift-sender-data-wrap">
            <label>
@@ -612,8 +613,7 @@
             <input class="form-control" name="nama_akun" placeholder="Nama Akun" type="text"/>
            </div>
            <div class="form-group">
-            <textarea class="form-control" name="Pesan" placeholder="Pesan" rows="1">
-</textarea>
+            <textarea class="form-control" name="Pesan" placeholder="Pesan" rows="1"></textarea>
            </div>
            <div class="form-group">
             <input class="form-control" name="nominal" placeholder="Nominal" type="number"/>
@@ -643,11 +643,10 @@
       <div class="wedding-wish-body">
        <div class="wedding-wish-form">
         <form class="" id="weddingWishForm">
-<input data-type="timestamp" name="waktu" type="hidden"/>
+         <input data-type="timestamp" name="waktu" type="hidden"/>
          <div class="comment-box-wrap" data-aos="fade-up" data-aos-delay="" data-aos-duration="1200">
           <div class="form-group guest-comment-wrap">
-           <textarea class="form-control guest-comment" name="pesan" placeholder="Berikan Doa Terbaikmu" rows="1">
-</textarea>
+           <textarea class="form-control guest-comment" name="pesan" placeholder="Berikan Doa Terbaikmu" rows="1"></textarea>
           </div>
           <div class="submit-comment-wrap">
            <button class="submit submit-comment" data-last="" type="submit">
@@ -707,12 +706,17 @@
        Dipersembahkan Oleh
       </p>
       <a data-dekeku_data_seller='{"home_page":"href"}' href="https://www.dekeku.my.id" target="_blank">
-       <img data-dekeku_data_seller='{"logo2":"src"}' style="width: 200px;padding: 20px 0px;" src=""/>
+       <img data-dekeku_data_seller='{"logo2":"src"}' src="" style="width: 200px;padding: 20px 0px;"/>
       </a>
-      <p>Kontak Pemesanan</p>
-      <a data-dekeku_data_seller='{"sosialMedia_whatsApp":"href"}' href="" target="_blank" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;text-decoration: none;">
-        <img style="height: 40px;width: auto;padding: 5px;" src="https://ik.imagekit.io/mustofa/web/img/icon-wa.png" />
-        <p style="color: #ffffff;"> <span data-dekeku_data_seller='{"pemilik":"textContent"}'></span></p>
+      <p>
+       Kontak Pemesanan
+      </p>
+      <a data-dekeku_data_seller='{"sosialMedia_whatsApp":"href"}' href="" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;text-decoration: none;" target="_blank">
+       <img src="https://ik.imagekit.io/mustofa/web/img/icon-wa.png" style="height: 40px;width: auto;padding: 5px;"/>
+       <p style="color: #ffffff;">
+        <span data-dekeku_data_seller='{"pemilik":"textContent"}'>
+        </span>
+       </p>
       </a>
      </div>
     </section>
@@ -722,7 +726,7 @@
   <section class="person" id="person">
    <div class="person-greeting" onclick="togglePersonInfo()">
     <div>
-     <svg class="person-envelope-icon" height="15" viewbox="0 0 22 15" width="22" xmlns="http://www.w3.org/2000/svg">
+     <svg class="person-envelope-icon" height="15" viewBox="0 0 22 15" width="22" xmlns="http://www.w3.org/2000/svg">
       <rect class="cls-1" height="14" rx="1.38571" width="21" x="0.5" y="0.5">
       </rect>
       <path class="cls-1" d="M21.3713 0.628529L12.109 7.36475C11.4477 7.84564 10.5519 7.84564 9.89072 7.36475L0.628418 0.628529">
@@ -735,7 +739,7 @@
      </p>
      <h3 class="person-name small">
       <span class="data-nama">
-       Tamu Undangan
+       
       </span>
      </h3>
     </div>
@@ -746,7 +750,7 @@
      </p>
      <h3 class="person-name large">
       <span class="data-nama">
-       Tamu Undangan
+       
       </span>
      </h3>
      <p>
@@ -755,12 +759,13 @@
      <small class="person-powered">
       Dipersembahkan Oleh
       <a data-dekeku_data_seller='{"home_page":"href"}' href="https://www.dekeku.my.id">
-       <span data-dekeku_data_seller='{"nama":"textContent"}'></span>
+       <span data-dekeku_data_seller='{"nama":"textContent"}'>
+       </span>
       </a>
      </small>
     </div>
     <div>
-     <svg class="person-envelope-open" height="122" viewbox="0 0 267 122" width="267" xmlns="http://www.w3.org/2000/svg">
+     <svg class="person-envelope-open" height="122" viewBox="0 0 267 122" width="267" xmlns="http://www.w3.org/2000/svg">
       <path class="cls-1" d="M267 0L160.707 73.524L142.911 61.2137C136.065 56.4782 127.001 56.4782 120.155 61.2137L104.326 72.1634L0 1.03964e-05V121H267V0Z">
       </path>
       <path class="cls-2" d="M103.785 72.3087L49.5469 109.279L35.9873 118.522L32.5974 120.833">
@@ -770,7 +775,7 @@
      </svg>
     </div>
     <button class="person-close" onclick="togglePersonInfo()" type="button">
-     <svg class="person-close-icon" height="25" viewbox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
+     <svg class="person-close-icon" height="25" viewBox="0 0 48 48" width="25" xmlns="http://www.w3.org/2000/svg">
       <rect class="cls-1" height="48" width="48">
       </rect>
       <path class="cls-2" d="M14 14L34 34">
@@ -797,8 +802,8 @@
   <div class="modal modal-center" id="modal">
   </div>
   <!-- SCRIPT -->
-    <script>
-        window.dekeku_tmp = {};
+  <script>
+   window.dekeku_tmp = {};
         // window.dekeku_tmp.sellerId = 2;
         window.dekeku_tmp.set = {};
         window.dekeku_tmp.set.undangan = 
@@ -856,10 +861,9 @@
             }
         
         };
-
-    </script>
-    <script type="module">
-    import { dekeku, init } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@8a7798fd5c88d3ed9dff87aca43e6415e10aca01/assets/js/undangan-dekeku.js";
+  </script>
+  <script type="module">
+   import { dekeku, init } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku-undangan@8a7798fd5c88d3ed9dff87aca43e6415e10aca01/assets/js/undangan-dekeku.js";
 
     document.addEventListener('DOMContentLoaded', async () => {
         dekeku.prosesJs = dekeku.prosesJs || 0;
@@ -867,9 +871,8 @@
         await init();
         dekeku.prosesJs -= 1;
         dekeku.proxy.saveDekeku.value = true;
-    });    
+    });
   </script>
-
   <script crossorigin="anonymous" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js">
   </script>
   <script crossorigin="anonymous" integrity="sha512-HGOnQO9+SP1V92SrtZfjqxxtLmVzqZpjFFekvzZVWoiASSQgSr4cw9Kqd2+l8Llp4Gm0G8GIFJ4ddwZilcdb8A==" referrerpolicy="no-referrer" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js">
@@ -886,6 +889,5 @@
   </script>
   <script src="js/tema.js">
   </script>
-
  </body>
 </html>
