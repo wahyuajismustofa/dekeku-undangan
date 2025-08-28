@@ -4,9 +4,7 @@
     <body>
 <script type="module">
     import dekeku, { dekekuFunction as _dF } from "https://cdn.jsdelivr.net/gh/wahyuajismustofa/dekeku@fd1fd81f4c842a66d71a5cc578291a8b19db20ba/assets/js/dekeku.js";
-    // import { initSeller} from "/assets/js/main.js";
-
-    // http://127.0.0.1:5500/tools.html            
+    
     document.addEventListener('DOMContentLoaded', async () => {
             try {
                 await _dF.waitUntilTrue(() => dekeku.ready).then(async () => {
@@ -26,10 +24,16 @@
                             let params = encodeUrlSafe(JSON.stringify({sellerId: dekeku.dataJson.seller.id}));
                             dekeku.dataJson.produk = jH.enrich(dekeku.dataJson.produk.produk,{kategori: dekeku.dataJson.produk.kategori, paket: dekeku.dataJson.produk.paket});
                             dekeku.dataJson.produk = dekeku.dataJson.produk.map(item => ({nama: item.nama, acara: item.acara,tema: item.tema, link: `${item.link_produk}?d=${params}`}));
-                            let produkStr = grouping(dekeku.dataJson.produk,["acara","tema"],["nama","link"]);
-                            console.log(typeof produkStr);
+                            let produkStr = "*DAFTAR UNDANGAN DEKEKU*\n";
+                            produkStr += 'File Foto Produk https://drive.google.com/drive/folders/1judBEwYODl0mQkRAFp4BTiMYMr-1NwFM\n\n';
+                            produkStr += grouping(dekeku.dataJson.produk,["acara","tema"],["nama","link"]);
+                            // console.log(produkStr);
                             window.location.href = `https://api.whatsapp.com/send?phone=${dekeku.dataJson.seller.kontak}&text=${encodeURIComponent(produkStr)}`;
+                        }else{
+                          return goBack();                          
                         }
+                    }else{
+                      return goBack();                          
                     }
                 });
             } catch (err) {
@@ -38,6 +42,7 @@
     });
     
     function goBack() {
+    // return console.log("Dialihkan");
     if (window.history.length > 1) {
         window.history.back();
     } else {
@@ -87,10 +92,13 @@ function grouping(datajson, groupKeys, displayKeys) {
 
     for (const key of Object.keys(group)) {
       const val = group[key];
+      // Tambahkan judul sesuai level
+      const title = `${groupKeys[level]?.toUpperCase() || "GROUP"} ${key.toUpperCase()}`;
+      text += `\n${title}\n`;
+
       if (Array.isArray(val)) {
         text += displayGroup(val);
       } else {
-        text += (level === 0 ? `\n${key.toUpperCase()}\n` : `${key.toUpperCase()}\n`);
         text += toText(val, level + 1);
       }
     }
@@ -98,16 +106,19 @@ function grouping(datajson, groupKeys, displayKeys) {
   }
 
   function displayGroup(items) {
-    return items
-      .map((item, i) => {
-        const line = displayKeys.map(k => item[k]).join(" - ");
-        return `${i + 1}. ${line}`;
-      })
-      .join("\n") + "\n";
+    return (
+      items
+        .map((item, i) => {
+          const line = displayKeys.map(k => item[k]).join(" - ");
+          return `${i + 1}. ${line}`;
+        })
+        .join("\n") + "\n"
+    );
   }
 
   return toText(grouped).trim();
 }
+
 
 
     function encodeUrlSafe(str) {
