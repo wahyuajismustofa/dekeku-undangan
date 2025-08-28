@@ -36,6 +36,7 @@ async function initSeller(){
   await _dF.loadAllData();
   await configDataSeller(sellerFilter,fileSeller);
   await _dF.updateDataAtt("dekeku_data_seller", dekeku.dataJson[fileSeller.nama]);
+  setFavicon(dekeku.dataJson.seller.favicon);
 }
 
 async function configDataSeller(sellerFilter , fileSeller) {
@@ -368,6 +369,18 @@ function makeLog(vars) {
     vars.forEach((val, idx) => {
         console.log(`${idx + 1}: `, val);
     });
+}
+
+function setFavicon(url) {
+  const oldIcon = document.querySelector("link[rel='icon']");
+  if (oldIcon) {
+    oldIcon.parentNode.removeChild(oldIcon);
+  }
+
+  const link = document.createElement("link");
+  link.rel = "icon";
+  link.href = url;
+  document.head.appendChild(link);
 }
 
 function enterFullscreen(el = document.documentElement) {
