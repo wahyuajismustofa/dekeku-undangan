@@ -28,7 +28,7 @@
                             produkStr += 'File Foto Produk https://drive.google.com/drive/folders/1judBEwYODl0mQkRAFp4BTiMYMr-1NwFM\n\n';
                             produkStr += grouping(dekeku.dataJson.produk,["acara","tema"],["nama","link"]);
                             // console.log(produkStr);
-                            window.location.href = `https://api.whatsapp.com/send?phone=${dekeku.dataJson.seller.kontak}&text=${encodeURIComponent(produkStr)}`;
+                            window.location.href = `https://wa.me/${dekeku.dataJson.seller.kontak}?text=${encodeURIComponent(produkStr)}`;
                         }else{
                           return goBack();                          
                         }
