@@ -2230,8 +2230,34 @@ section.gift.no-form .gift-inner .weddingGiftForm {
     overflow: visible;
 }
 
+.selectize-control .item:hover {
+    background: var(--background-tertiary);
+}
 
+.selectize-control .item:hover p {
+    color: var(--text-tertiary) !important;
+}
 
+h3.bank-name, h4.bank-account-number, h4.bank-account-name{
+    font-size: var(--body-text-size) !important;
+    font-family: var(--body-text-family) !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+}
+.bank-item{
+    display: none ;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--background-secondary);
+    max-width: 350px;
+    margin: auto;
+}
+
+.bank-item.show{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
 /* ======================
     COMMENT
 ====================== */
