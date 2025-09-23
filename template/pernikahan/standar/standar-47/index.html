@@ -59,7 +59,7 @@
       <div class="text-center mb-0 text-dark mt-3">
        Teruntuk
        <br/>
-       <strong class="e-nama">
+       <strong class="data-nama">
         namatamu
        </strong>
       </div>
@@ -381,9 +381,9 @@
       </div>
      </div>
      <div class="card p-3 text-center radius-10 card-undangan mt-4">
-      <form autocomplete="off" id="form-rsvp" novalidate="">
+      <form autocomplete="off" id="form-rsvp-pesan">
        <div class="form-group" data-aos="fade-up" data-aos-duration="2000">
-        <textarea class="form-control" cols="30" id="rsvp-pesan" name="pesan" placeholder="Tuliskan ucapan atau doa untuk pemilik acara" required="" rows="10"></textarea>
+        <textarea class="form-control" cols="30" data-required="" id="rsvp-pesan" name="pesan" placeholder="Tuliskan ucapan atau doa untuk pemilik acara" rows="10"></textarea>
        </div>
        <div class="form-group" data-aos="fade-up" data-aos-duration="2000">
         <div>
@@ -391,19 +391,14 @@
         </div>
         <br/>
         <div class="text-left">
-         <input id="rsvp-hadir" name="kehadiran" required="" style="width:20px; height:20px;" type="radio" value="Hadir"/>
+         <input data-required="" id="rsvp-hadir" name="kehadiran" style="width:20px; height:20px;" type="radio" value="Hadir"/>
          Hadir
          <br/>
-         <input id="rsvp-tidak-hadir" name="kehadiran" style="width:20px; height:20px;" type="radio" value="Tidak Hadir"/>
+         <input data-required="" id="rsvp-tidak-hadir" name="kehadiran" style="width:20px; height:20px;" type="radio" value="Tidak Hadir"/>
          Tidak Hadir
         </div>
        </div>
        <br clear="all"/>
-       <input id="__db" name="__db" type="hidden"/>
-       <input id="__sheet" name="__sheet" type="hidden"/>
-       <input id="__key" name="__key" type="hidden"/>
-       <input id="__waktu" name="__waktu" type="hidden"/>
-       <input id="rsvp-nama" name="nama" type="hidden"/>
        <button class="btn btn-primary btn-block" type="submit">
         KIRIM
        </button>
@@ -501,19 +496,58 @@
   </script>
   <script defer="" src="/assets/js/standar.js">
   </script>
-  <script src="https://cdn.jsdelivr.net/gh/wahyuajismustofa/berbagi-koding/js/form-undangan-web.js" type="module">
-  </script>
   <script>
    document.addEventListener("DOMContentLoaded", function () {
   initCountdown("2028-03-01");
-  setMultipleValues({
-    "rsvp-nama": namaTamu,
-    "__db": "preview3",
-    "__sheet": "tamu",
-    "__key": "nama",
-    "__waktu": "waktu"
-    });
 });
+  </script>
+  <script>
+   window.dekeku_tmp = {};
+        // window.dekeku_tmp.sellerId = 2;
+        window.dekeku_tmp.set = {};
+        window.dekeku_tmp.set.undangan =
+        {
+            fileName: "undangan-nikah-standar",
+            event : "2030-03-03T09:00:00+07:00",
+            bank_option: 
+            [
+                {
+                    "id":1,
+                    "title":"GOPAY",
+                    "credential":"08XXX",
+                    "name":"Nama Pemilik"
+                },
+                {
+                    "id":2,
+                    "title":"DANA",
+                    "credential":"08XXX",
+                    "name":"Nama Pemilik"
+                },
+                {
+                    "id":3,
+                    "title":"OVO",
+                    "credential":"08XXX",
+                    "name":"Nama Pemilik"
+                }
+            ],
+            music:
+            {
+                'url': 'https://audio.jukehost.co.uk/Vac1vc0tiekkEo4aKVPYZIDw5uQ8wIv6',
+                'box': '#music-box'
+            }
+        
+        };
+  </script>
+  <script type="module">
+   import { dekeku, init } from "/assets/js/undangan-dekeku-standar.js";
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        dekeku.prosesJs = dekeku.prosesJs || 0;
+        dekeku.prosesJs += 1;
+        await init();
+        dekeku.prosesJs -= 1;
+        dekeku.proxy.saveDekeku.value = true;
+    });
   </script>
  </body>
 </html>

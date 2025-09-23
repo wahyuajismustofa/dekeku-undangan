@@ -13,7 +13,6 @@ export async function init(){
     _dF.initDekeku();
     await initSeller();
     await initUndangan();
-
   }catch (err) {
       console.error("❌ Gagal:", err.message);
   }

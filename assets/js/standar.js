@@ -1,6 +1,4 @@
 // ==================== VARIABEL ====================
-const dataPath = "/assets/data/preview-tamu.json";
-// const dataPath = "/assets/data/tamu.json"; // Ganti dengan path data asli
 let paramNama = "";
 let namaTamu = "";
 let dataUndangan = {};
@@ -9,177 +7,16 @@ let myAudio = null;
 
 // ==================== INISIALISASI ====================
 async function init(){
-    try {
-    dataUndangan = await getData(dataPath);
-
-    if (Array.isArray(dataUndangan.tamu) && dataUndangan.tamu.length > 0) {
-        renderPesan("pesan", dataUndangan.tamu);
-    }
-    } catch (error) {
-        console.error("Gagal mengambil data JSON:", error);
-    }
     setupSmoothScroll(".link", start);
     scrollToTop();    
 }
-
-
-// ==================== PARAMS ====================
-  function getParams(name) {
-    const url = window.location.href;
-    name = name.replace(/[[]]/g, "\\$&");
-    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
-    const results = regex.exec(url);
-    if (!results || !results[2]) return null;
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
-  paramNama = getParams("to");
-    if (paramNama) {
-    namaTamu = paramNama.replace(/[-_]/g, " ");
-  }
-    document.querySelectorAll(".e-nama").forEach(el => {
-    el.textContent = namaTamu;
-  });
-function setValueById(Id, value) {
-  const data = document.getElementById(Id);
-  if (!data) {
-    console.warn(`Elemen dengan ID '${Id}' tidak ditemukan.`);
-    return;
-  }
-  data.value = value;
-}
-function setMultipleValues(data) {
-  if (typeof data !== "object") {
-    console.warn("setMultipleValues: data tidak valid.");
-    return;
-  }
-
-  for (const [id, value] of Object.entries(data)) {
-    setValueById(id, value);
-  }
-}
-
-
-// ==================== DATA ====================
-async function getData(dataPath) {
-  try {
-    const timestamp = new Date().getTime();
-    const response = await fetch(`${dataPath}?t=${timestamp}`);
-    if (!response.ok) throw new Error("Gagal mengambil data");
-    return await response.json();
-  } catch (err) {
-    console.error("Error:", err.message);
-    return {};
-  }
-}
-
-// ==================== PESAN ====================
-function buatCard(pesan) {
-  const card = document.createElement("div");
-  card.className = "card p-3 text-center radius-10 card-undangan mt-4";
-  card.setAttribute("data-aos", "fade-up");
-  card.setAttribute("data-aos-duration", "2000");
-
-  card.innerHTML = `
-    <h6 class="mb-0">${pesan.nama}</h6>
-    <hr/> ${pesan.pesan}
-    <div class="mt-4">${formatTanggalIndonesia(pesan.waktu)}</div>
-  `;
-  return card;
-}
-
-let pesanDataGlobal = [];
-let pesanIndex = 0;
-const pesanPerPage = 4; // Jumlah pesan yang ditampilkan per batch
-
-function renderPesan(targetWrapperId = "pesan", data = []) {
-  const wrapper = document.getElementById(targetWrapperId);
-  if (!wrapper) return console.error(`Elemen dengan ID '${targetWrapperId}' tidak ditemukan.`);
-
-  const container = wrapper.querySelector(".container");
-  if (!container) return console.error(".container tidak ditemukan di dalam #" + targetWrapperId);
-
-  const isGrid = container.classList.contains("grid");
-  const isFlat = container.classList.contains("flat");
-
-  // Urutkan dari terbaru ke terlama
-  pesanDataGlobal = [...data].sort((a, b) => new Date(b.waktu) - new Date(a.waktu));
-  pesanIndex = 0;
-
-  // Bersihkan isi
-  container.innerHTML = "";
-
-  // Tampilkan batch awal
-  tampilkanPesan(container, isGrid, isFlat, wrapper);
-}
-
-function tampilkanPesan(container, isGrid, isFlat, wrapper) {
-  const nextBatch = pesanDataGlobal.slice(pesanIndex, pesanIndex + pesanPerPage);
-  pesanIndex += nextBatch.length;
-
-  if (isGrid) {
-    let row = container.querySelector(".row");
-    if (!row) {
-      row = document.createElement("div");
-      row.className = "row justify-content-center";
-      container.appendChild(row);
-    }
-
-    nextBatch.forEach(p => {
-      const col = document.createElement("div");
-      col.className = "col-lg-4 col-md-6";
-      col.appendChild(buatCard(p));
-      row.appendChild(col);
-    });
-
-  } else if (isFlat) {
-    nextBatch.forEach(p => container.appendChild(buatCard(p)));
-  }
-
-  // Tampilkan atau sembunyikan tombol
-  let btn = wrapper.querySelector("#btnLihatLebih");
-
-  if (pesanIndex < pesanDataGlobal.length) {
-    if (!btn) {
-      btn = document.createElement("button");
-      btn.id = "btnLihatLebih";
-      btn.className = "btn btn-primary d-block mx-auto mt-4";
-      btn.textContent = "Tampilkan Lebih Banyak";
-      btn.addEventListener("click", () => tampilkanPesan(container, isGrid, isFlat, wrapper));
-      wrapper.appendChild(btn);
-    } else {
-      btn.style.display = "block";
-    }
-  } else {
-    if (btn) btn.remove();
-  }
-}
-
-// ==================== TANGGAL INDONESIA ====================
-function formatTanggalIndonesia(isoString) {
-  const tanggal = new Date(isoString);
-  const hari = tanggal.toLocaleDateString("id-ID", { weekday: "long" });
-  const tanggalStr = tanggal.toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
-  const jamStr = tanggal.toLocaleTimeString("id-ID", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    timeZone: "Asia/Jakarta"
-  });
-
-  return `${hari}, ${tanggalStr} pukul ${jamStr} WIB`;
-}
-
 
 // ==================== MUSIC CONTROL ====================
 function start() {
   $(".hidden, .navbar, .button-menu, #musik").css("display", "block");
   $("body").css({ overflow: "auto", height: "auto" });
 
-  const myAudio = document.getElementById("audio");
+  myAudio = document.getElementById("audio");
   if (!myAudio) return;
 
   // Hanya mainkan jika belum main
@@ -199,7 +36,6 @@ function updateMuteIcon(isMuted) {
 
 
 function toggleAudio() {
-  const myAudio = document.getElementById("audio");
   if (!myAudio) return;
 
   if (myAudio.paused || myAudio.ended) {
@@ -211,7 +47,6 @@ function toggleAudio() {
 
 
 function playAudio() {
-  const myAudio = document.getElementById("audio");
   if (!myAudio) return;
 
   if (myAudio.paused || myAudio.ended) {
@@ -233,7 +68,6 @@ function playAudio() {
 }
 
 function pauseAudio() {
-  const myAudio = document.getElementById("audio");
   if (!myAudio) return;
 
   if (!myAudio.paused) {
@@ -431,17 +265,17 @@ function closeAlert() {
 
 // ==================== SCROLL TO TOP ====================
 function scrollToTop() {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-  history.replaceState(null, null, window.location.pathname + window.location.search);
+  window.scrollTo(0, 0);
 }
 
-document.getElementById("bukaUndangan").addEventListener("click", () => {
-  start();
-  aktifkanFullscreen();
-});
+const bukaBtn = document.getElementById("bukaUndangan");
+if (bukaBtn) {
+  bukaBtn.addEventListener("click", () => {
+    start();
+    aktifkanFullscreen();
+  });
+}
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
