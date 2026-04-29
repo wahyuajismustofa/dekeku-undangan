@@ -113,7 +113,7 @@ export const template ={
         </div>
         </form>
         <p class="text-gray font-small m-0">
-        Kepuasan Anda kembanggan kami.
+        Kepuasan Anda kebanggan kami.
         </p>
         </div>
     </div>
