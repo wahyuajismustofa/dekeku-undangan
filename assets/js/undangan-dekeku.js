@@ -85,7 +85,7 @@ function initRSVP() {
     }
   });
 }
-
+ 
 function renderRSVP(set) {
   const container = document.getElementById("rsvpContainer");
   if (!container || !dekeku.params_1.to) return;
