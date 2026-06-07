@@ -1,5 +1,5 @@
 const _fileName = 'preview-undangan-pernikahan';
-const _urlApi = "https://api.dekeku.my.id";
+const _urlApi = "https://dekeku-api.wahyuajismustofa.workers.dev";
 const waNumber = "6285161517176";
 
 // variabel global
